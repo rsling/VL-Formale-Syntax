@@ -1,0 +1,479 @@
+\documentclass[10pt,a3paper]{article}
+
+\usepackage[margin=2cm]{geometry}
+
+\usepackage{booktabs}
+\usepackage{color}
+\usepackage{soul}
+\usepackage[linecolor=gray,backgroundcolor=yellow!50,textsize=tiny]{todonotes}
+\usepackage[linguistics]{forest}
+\usepackage{styles/my-gb4e-slides}
+
+\usepackage{avm}
+
+\usepackage[maxbibnames=99,
+  maxcitenames=2,
+  uniquelist=false,
+  backend=biber,
+  doi=false,
+  url=false,
+  isbn=false,
+  bibstyle=biblatex-sp-unified,
+  citestyle=sp-authoryear-comp]{biblatex}
+
+\addbibresource{register.bib}
+
+\newcommand{\eg}{e.\,g.}
+\newcommand{\Eg}{E.\,g.}
+
+\forestset{
+  decide/.style={draw, chamfered rectangle, inner sep=2pt},
+  finall/.style={rounded corners, fill=gray, text=white},
+  intrme/.style={draw, rounded corners},
+  yes/.style={edge label={node[near end, above, sloped, font=\scriptsize]{Ja}}},
+  no/.style={edge label={node[near end, above, sloped, font=\scriptsize]{Nein}}}
+}
+
+\author{Roland Schäfer}
+\title{HPSG | Mündliche Prüfung | Bereich 2 \textit{Argumentabbindung mit Linking}}
+\date{\today}
+
+\usepackage{fontspec}
+\defaultfontfeatures{Ligatures=TeX,Numbers=OldStyle, Scale=MatchLowercase}
+\setmainfont{Linux Libertine O}
+\setsansfont{Linux Biolinum O}
+
+\avmfont{\sc}
+\avmsortfont{\it}
+\avmvalfont{\it}
+
+\pagestyle{empty}
+
+\begin{document}
+
+\maketitle
+
+\thispagestyle{empty}
+
+\section{Material}
+
+\begin{exe}
+  \ex Ein Dozent leider unter der Hitze.\label{ex:satz}
+\end{exe}
+
+\section{Version ohne Semantik für den ersten Überblick}
+
+\begin{avm}
+  \[ 
+    phon & \< \rm\it Ein Dozent leider unter der Hitze \> \\
+    head & \@7 \\
+    subcat & \<\> \\
+    hd-dtr & \[
+      phon & \< \rm\it leidet unter der Hitze \> \\
+      head & \@7 \\
+      subcat & \@5 \< \@6 \> \\
+      hd-dtr & \[
+        phon & \< \rm\it leidet \> \\
+        head & \@7 \[ \asort{verb}
+          vform & fin 
+        \]\\
+        subcat & \@5 $\oplus$ \< \@4 \> 
+      \] \\
+      nhd-dtr & \@4  \[
+        phon & \< \rm\it unter der Hitze \> \\
+        head & \@8 \\
+        subcat & \<\> \\
+        hd-dtr & \[
+          phon & \< \rm\it unter \> \\
+          head & \@8 \[ \asort{prep}
+            pform & unter-dat 
+          \]\\
+          subcat & \< \@3 \> 
+        \] \\
+        nhd-dtr & \@3  \[
+          phon & \< \rm\it der Hitze \> \\
+          head & \@9 \\
+          subcat & \<\> \\
+          hd-dtr & \[
+            phon & \< \rm\it Hitze\> \\
+            head & \@9 \[ \asort{noun}
+            case & \@{12} dat
+            \] \\
+            subcat & \< \@2 \>
+          \]\\
+          nhd-dtr & \@2  \[
+            phon & \< \rm\it der \> \\
+            head & \[ \asort{det}
+              case & \@{12}
+            \] \\
+            subcat & \<\> 
+          \]
+        \] \\
+      \]
+      \] \\
+    nhd-dtr & \@6  \[
+      phon & \< \rm\it ein Dozent \> \\
+      head & \@{10} \\
+      subcat & \<\> \\
+      hd-dtr & \[
+        phon & \< \rm\it Dozent \> \\
+        head & \@{10} \[ \asort{noun}
+          case & \@{11} nom \\
+        \] \\
+        subcat & \< \@1 \>
+      \] \\
+      nhd-dtr & \@1  \[
+        phon & \< \rm\it ein \> \\
+        head &\[ \asort{det}
+          case & \@{11}
+        \] \\
+        subcat & \<\>
+      \]
+    \]
+  \]
+\end{avm}\\
+
+
+
+\newpage
+
+\section{Version mit Semantik}
+
+\scalebox{0.95}{%
+\begin{avm}
+  \[ 
+    phon & \< \rm\it Ein Dozent leider unter der Hitze \> \\
+    head & \@7 \\
+    subcat & \<\> \\
+    cont & \@{17} \\
+    hd-dtr & \[
+      phon & \< \rm\it leidet unter der Hitze \> \\
+      head & \@7 \\
+      subcat & \< \@6 \> \\
+      cont & \@{17} \\
+      hd-dtr & \[
+        phon & \< \rm\it leidet \> \\
+        head & \@7 \[ \asort{verb}
+          vform & fin 
+        \]\\
+        subcat & \<
+          \@6 \[
+            cont & \[
+              index & \@{19} \\
+              restr & \@{16}
+          \] \],
+          \@4 \[
+          cont & \[
+            index & \@{18} \\
+            restr & \@{15}
+          \] \]
+          \> \\
+        cont & \@{17} \[ 
+          restr & \< \[ \asort{leiden-unter-rel}
+            exp & \@{19} \\
+            source & \@{18}
+          \] \> $\oplus$ \@{15} $\oplus$ \@{16}
+        \]
+      \] \\
+      nhd-dtr & \@4  \[
+        phon & \< \rm\it unter der Hitze \> \\
+        head & \@8 \\
+        subcat & \<\> \\
+        cont & \@{21} \\
+        hd-dtr & \[
+          phon & \< \rm\it unter \> \\
+          head & \@8 \[ \asort{prep}
+            pform & unter-dat 
+          \]\\
+          subcat & \< \@3 \[cont & \@{21} \> 
+          \]\\
+          cont & \@{21} 
+        \] \\
+        nhd-dtr & \@3  \[
+          phon & \< \rm\it der Hitze \> \\
+          head & \@9 \\
+          subcat & \<\> \\
+          cont & \@{21} \\ 
+          hd-dtr & \[
+            phon & \< \rm\it Hitze\> \\
+            head & \@9 \[ \asort{noun}
+            case & \@{12} dat
+            \] \\
+            subcat & \< \@2 \> \\
+            cont & \@{21} \[
+              index & \@{18} \[ \asort{index}
+                per & 3 \\
+                num & sg \\
+                gen & f
+              \] \\
+              restr & \@{15} \< \[ \asort{hitze-rel}
+                instance & \@{18}
+              \] \>
+            \] 
+          \]\\
+          nhd-dtr & \@2  \[
+            phon & \< \rm\it der \> \\
+            head & \[ \asort{det}
+              case & \@{12}
+            \] \\
+            subcat & \<\> 
+          \]
+        \] \\
+      \]
+      \] \\
+    nhd-dtr & \@6  \[
+      phon & \< \rm\it ein Dozent \> \\
+      head & \@{10} \\
+      subcat & \<\> \\
+      cont & \@{20} \\
+      hd-dtr & \[
+        phon & \< \rm\it Dozent \> \\
+        head & \@{10} \[ \asort{noun}
+          case & \@{11} nom \\
+        \] \\
+        subcat & \< \@1 \> \\
+        cont & \@{20} \[ 
+          index & \@{19} \[ \asort{index}
+                per & 3 \\
+                num & sg \\
+                gen & m
+              \]\\
+          restr & \@{16} \< \[ \asort{dozent-rel}
+            instance & \@{19}
+          \] \>
+        \]
+      \] \\
+      nhd-dtr & \@1  \[
+        phon & \< \rm\it ein \> \\
+        head &\[ \asort{det}
+          case & \@{11}
+        \] \\
+        subcat & \<\>
+      \]
+    \]
+  \]
+\end{avm}%
+}
+
+\newpage
+
+
+\subsection{Semantischer Beitrag des gesamten Satzes}
+
+
+\noindent\begin{avm}
+  \[
+    phon & \< \rm\it Ein Dozent leidet unter der Hitze \> \\
+    cont & \@{17} \[
+      index & \<\> \\
+      restr & \< \[ \asort{leiden-unter-rel}
+        exp & \@{19} \\
+        source & \@{18}
+      \] \> $\oplus$ 
+      \@{15} \< \[ \asort{hitze-rel}
+                instance & \@{18}
+              \] \>
+      $\oplus$
+      \@{16} \< \[ \asort{dozent-rel}
+            instance & \@{19}
+          \] \>
+    \]
+  \]
+\end{avm}\\
+
+\vspace{\baselineskip}
+
+
+\noindent\begin{avm}
+  \[
+    phon & \< \rm\it Ein Dozent leidet unter der Hitze \> \\
+    cont & \[
+      index & \<\> \\
+      restr & \< \[ \asort{leiden-unter-rel}
+        exp & \@{19} \\
+        source & \@{18}
+      \],
+      \[ \asort{hitze-rel}
+                instance & \@{18}
+              \],
+      \[ \asort{dozent-rel}
+            instance & \@{19}
+          \] \>
+    \]
+  \]
+\end{avm}\\
+
+\vspace{\baselineskip}
+
+
+\noindent\begin{avm}
+  \[
+    phon & \< \rm\it Ein Dozent leidet unter der Hitze \> \\
+    cont & \[
+      index & \<\> \\
+      restr & \< \[ \asort{leiden-unter-rel}
+        exp & \@{19} \\
+        source & \@{18}
+      \],
+      \[ \asort{hitze-rel}
+              instance & \@{18} \[ \asort{index}
+                per & 3 \\
+                num & sg \\
+                gen & f
+              \]
+              \],
+      \[ \asort{dozent-rel}
+            instance & \@{19} \[ \asort{index}
+                per & 3 \\
+                num & sg \\
+                gen & m
+              \]
+          \] \>
+    \]
+  \]
+\end{avm}\\
+
+
+
+
+\subsection{Lexikoneintrag für das Verb}
+
+
+\begin{avm}
+  \[
+        phon & \< \rm\it leidet \> \\
+        head & \[ \asort{verb}
+          vform & fin 
+        \]\\
+        subcat & \<
+          \[
+            head & \[ \asort{noun}
+              case & nom
+            \] \\
+            subcat & \<\> \\
+            cont & \[
+              index & \@{19} \\
+              restr & \@{16}
+          \] \],
+        \[
+          head & \[ \asort{prep}
+            pform & unter-dat 
+          \] \\
+          subcat & \<\> \\
+          cont & \[
+            ind & \@{18} \\
+            restr & \@{15}
+          \] \]
+          \> \\
+        cont & \[
+          restr & \< \[ \asort{leiden-unter-rel}
+            exp & \@{19} \\
+            source & \@{18}
+          \] \> $\oplus$ \@{15} $\oplus$ \@{16}
+        \]
+   \]
+\end{avm}
+
+
+\subsection{Lexikoneintrag der Präposition}
+
+
+\begin{avm}
+  \[
+    phon & \< \rm\it unter \> \\
+    head & \[ \asort{prep}
+      pform & unter-dat 
+    \]\\
+    subcat & \< \[
+      head & \[ \asort{noun}
+        case & dat
+      \]\\
+      subcat & \<\> \\
+      cont & \@{21}
+    \] \> \\
+    cont & \@{21} 
+  \]
+\end{avm}
+
+\newpage
+
+\subsection{Beispieleintrag für ein Substantiv}
+
+
+\begin{avm}
+  \[
+    phon & \< \rm\it Dozent \> \\
+    head & \[ \asort{noun}
+      case & \@{11} nom \\
+    \] \\
+    subcat & \< \[ head & \[
+      \asort{det} 
+      case & \@{11} 
+    \] \] \> \\
+    cont & \[
+      index & \@{19} \\
+      restr & \< \[ \asort{dozent-rel}
+        instance & \@{19}
+      \] \>
+    \]
+  \]
+\end{avm}
+
+\subsection{Schemata}
+
+\textit{hd-arg-phrase} $\Rightarrow$
+\begin{avm}
+  \[
+    subcat & \@1 \\
+    hd-dtr|subcat & \@1 $\oplus$ \< \@2 \> \\
+    nhd-dtr & \@2
+  \]
+\end{avm}
+
+
+\subsection{Prinzipien}
+
+\paragraph{Kopf-Argument-Phrase}
+
+\noindent \textit{headed-phrase} $\Rightarrow$
+\begin{avm}
+  \[
+    head & \@1 \\
+    hd-dtr|head & \@1
+  \]
+\end{avm}
+
+\paragraph{Semantics Principle (SP)} 
+
+\noindent \textit{headed-phrase} $\Rightarrow$
+\begin{avm}
+  \[
+    cont & \@1 \\
+    hd-dtr|cont & \@1
+  \]
+\end{avm}
+
+\section{Aufgaben}
+
+\noindent Finden Sie in der Analyse jeweils die folgenden Numerierungen für Strukturteilung und erklären Sie, warum sie an mehreren Stellen stehen.
+\textit{Erklären} heißt hier nur, das Schema, das Prinzip und\slash oder den Lexikoneintrag zu benennen, die es erlauben, die jeweilige Strukturteilung anzunehmen.
+Geben Sie zusätzlich an, in welchen Lexikoneinträgen die konkreten Merkmale hinter den Numerierungen explizit genannt werden.
+(Das können jeweils mehrere sein.)\\
+
+\noindent Es kommen wirklich nur die hier genannten Arten von Einträgen, Schemata und Prinzipien zum Einsatz.
+Diese erzeugen bereits die beträchtliche Komplexität der Analyse.\\
+
+\noindent Die zu erklärenden Strukturteilungen werden hier schon thematisch gruppiert.
+
+\begin{enumerate}
+  \item 7, 8, 9, 10
+  \item 1, 2, 3, 4, 6
+  \item 18, 19
+  \item 15, 16
+  \item 11, 12
+  \item 17, 20, 21
+\end{enumerate}
+
+\end{document}
+
+

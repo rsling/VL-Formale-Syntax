@@ -1,0 +1,240 @@
+\documentclass[10pt,a4paper]{article}
+
+\usepackage[margin=2cm]{geometry}
+
+\usepackage{booktabs}
+\usepackage{color}
+\usepackage{soul}
+\usepackage[linecolor=gray,backgroundcolor=yellow!50,textsize=tiny]{todonotes}
+\usepackage[linguistics]{forest}
+\usepackage{styles/my-gb4e-slides}
+
+\usepackage{avm}
+
+\usepackage[maxbibnames=99,
+  maxcitenames=2,
+  uniquelist=false,
+  backend=biber,
+  doi=false,
+  url=false,
+  isbn=false,
+  bibstyle=biblatex-sp-unified,
+  citestyle=sp-authoryear-comp]{biblatex}
+
+\addbibresource{register.bib}
+
+\newcommand{\eg}{e.\,g.}
+\newcommand{\Eg}{E.\,g.}
+
+\definecolor{rot}{rgb}{0.7,0.2,0.0}
+\newcommand{\rot}[1]{\textcolor{rot}{#1}}
+\definecolor{blau}{rgb}{0.1,0.2,0.7}
+\newcommand{\blau}[1]{\textcolor{blau}{#1}}
+\definecolor{gruen}{rgb}{0.0,0.7,0.2}
+\newcommand{\gruen}[1]{\textcolor{gruen}{#1}}
+\definecolor{grau}{rgb}{0.6,0.6,0.6}
+\newcommand{\grau}[1]{\textcolor{grau}{#1}}
+\definecolor{orongsch}{RGB}{255,165,0}
+\newcommand{\orongsch}[1]{\textcolor{orongsch}{#1}}
+\definecolor{tuerkis}{RGB}{63,136,143}
+\definecolor{braun}{RGB}{108,71,65}
+\newcommand{\tuerkis}[1]{\textcolor{tuerkis}{#1}}
+\newcommand{\braun}[1]{\textcolor{braun}{#1}}
+
+\newcommand*{\mybox}[1]{\framebox{#1}}
+
+\forestset{
+  decide/.style={draw, chamfered rectangle, inner sep=2pt},
+  finall/.style={rounded corners, fill=gray, text=white},
+  intrme/.style={draw, rounded corners},
+  yes/.style={edge label={node[near end, above, sloped, font=\scriptsize]{Ja}}},
+  no/.style={edge label={node[near end, above, sloped, font=\scriptsize]{Nein}}}
+}
+
+\author{Roland Schäfer}
+\title{HPSG: Morphologie vs.\ Syntax und Nullartikel}
+\date{\today}
+
+\usepackage{fontspec}
+\defaultfontfeatures{Ligatures=TeX,Numbers=OldStyle, Scale=MatchLowercase}
+\setmainfont{Linux Libertine O}
+\setsansfont{Linux Biolinum O}
+
+\avmfont{\sc}
+\avmsortfont{\it}
+\avmvalfont{\it}
+
+\pagestyle{empty}
+
+\begin{document}
+
+\maketitle
+
+\thispagestyle{empty}
+
+\section{Problemstellung}
+
+In HPSG verwenden Phonologie, Morphologie, Syntax, Semantik, Pragmatik usw.\ denselben Formalismus.
+Insbesondere die Trennung zwischen Morphologie und Syntax ist daher eine relativ willkürliche in HPSG.
+Hier wird gezeigt, wie man in HPSG mit der Tatsache umgehen kann, dass bestimmte Nomina (hier: Stoffnomina wie \textit{Zement}) auch im Singular ohne Determinierer auftreten können, in bestimmten Fällen aber doch einen Determinierer verlangen.
+Wir beginnen mit der Annahme, dass diese Nomina im Lexikon eine leere \textsc{subcat} haben (Abschnitt~\ref{sec:lex}).
+Es wird zunächst eine morphologische Lösung mit einer DLR vorgeschlagen (Abschnitt~\ref{sec:dlr}), dann eine äquivalente syntaktische mit einer unären Phrase (Abschnitt~\ref{sec:unaer}).
+Zum Schluss wird eine syntaktische Lösung mit einem leeren Element (Nullartikel) gezeigt (Abschnitt~\ref{sec:null}), die einen modifizierten lexikalischen Eintrag des Nomens erfordert.
+Die DLR-Lösung und die unäre Projektion sind auch komputational äquivalent, die Lösung mit einem leeren Element ist komputational erheblich schlechter.\\
+
+\noindent Die Lösungen hier verstehen sich als Vereinfachungen.
+Echte Modellierungen sind meistens erheblich komplexer.
+
+\section{Lexikoneintrag}\label{sec:lex}
+
+Der Typ \textit{mass-noun} sei ein Unter- oder Nebentyp von \textit{noun} mit leerer \textsc{subcat} und Stoffsemantik.
+Den Typ \textit{mass-noun} brauchen wir vor allem, um die Anwendbarkeit der Regeln auf Stoffnomina zu beschränken.\\
+
+\begin{avm}
+  \[ \asort{word}
+    phon & \<\rm\it Zement\> \\
+    cat & \[
+      head & \[ \asort{mass-noun} \] \\
+      subcat & \<\> \\
+    \] \\
+    cont & \[
+      index & \@1 \\
+      restr & \<\[ \asort{cement-substance-rel}
+        instance & \@1 \\
+      \]\> \\
+    \]
+  \]
+\end{avm}
+ 
+\newpage
+
+\section{Lösungsstrategien}
+
+\subsection{Morphologie mit DLR}\label{sec:dlr}
+
+Diese Regel macht aus einem Stoffnomen ein sortales Nomen (\textit{Wir liefern drei verschiedene Zemente.}).
+Eine ähnliche Regel mit anderer Semantik könnte man für Portionsnomina erstellen (\textit{Wir hätten gerne drei Wasser.}).
+Dass wir ein \textsc{psoa-arg} nehmen, liegt daran, dass hier die Extension des Nomens jenseits einer einfachen Teilmengenbildung verändert wird.
+Wenn Ihnen das nicht klar ist, machen Sie sich keine weiteren Gedanken.
+Dazu braucht man eigentlich verschärfte Semantikkenntnisse.\\
+
+\begin{avm}
+  \[ \asort{mass-sortal-noun-lex-rule}
+    cat & \[
+      head & \[ \asort{noun} \] \\
+      subcat & \<\[ cat|head & \[ \asort{det} \] \]\> \\
+    \]  \\
+    cont & \[
+      restr & \< \[ \asort{sort-of-mass-rel}
+        psoa-arg & \@3 \\
+      \]\> \\
+    \] \\
+    lex-dtr & \[
+      cat & \[
+        head & \[ \asort{mass-noun} \] \\
+      \] \\
+      cont &  \@3 \\
+    \]\\
+  \]
+\end{avm}\\
+
+\noindent Hinweis: In lexikalischen Regeln wird per Definition all das implizit aus der \textsc{lex-dtr} übernommen, über das nichts explizit ausgesagt wird.
+Daher müssen wir hier nichts über \textsc{phon} usw. aussagen.
+
+\subsection{Syntax mit unärer Projektion}\label{sec:unaer}
+
+Für eine syntaktische \textit{unary-phrase} nehmen wir an, dass im Obertyp \textit{unary-phrase} bereits festgelegt wurde, dass \textsc{phon} und \textsc{cat|head} der Phrase gleich dem der \textsc{single-dtr} sind.\\
+
+\noindent\textit{unary-phrase}~$\Rightarrow$\\
+\begin{avm}
+  \[ 
+    phon & \@1 \\
+    cat|head & \@2 \\
+    single-dtr & \[
+      phon & \@1 \\
+      cat|head & \@2 \\
+    \]\\
+  \]
+\end{avm}\\
+
+\noindent Der Index muss explizit gesetzt werden, weil es keine Default-Übernahme-Regel für alle nicht erwähnten Merkmale gibt wie bei morphologischen Regeln.
+Im Prinzip ist das aber genau dasselbe.\\
+
+\noindent\textit{mass-sortal-noun-unary-phrase}~$\Rightarrow$\\
+\begin{avm}
+  \[ 
+    cat & \[
+      subcat & \<\[ cat|head & \[ \asort{det} \] \]\> \\
+    \]  \\
+    cont & \[
+      index & \@1 \\
+      restr & \< \[ \asort{sort-of-mass-rel}
+        psoa-arg & \@3 \\
+      \]\> \\
+    \] \\
+    single-dtr & \[
+      cat & \[
+        head & \[ \asort{mass-noun} \] \\
+      \] \\
+      cont &  \@3 \[
+        index & \@1 \\
+      \]\\
+    \]\\
+  \]
+\end{avm}\\
+
+\noindent Hinweis: Diese Regel ist technisch gesehen eine Implikation, die für einen bestimmten Typ unärer Phrasen (\textit{mass-sortal-noun-unary-phrase}) gilt.
+Die DLR (\textit{mass-sortal-noun-lex-rule}) ist selber ein Zeichen, keine Implikation.
+
+\newpage
+
+\subsection{Syntax mit Nullartikel}\label{sec:null}
+
+Der Nullartikel könnte wiefolgt aussehen.
+Über \textsc{spec} sorgen wir dafür, dass er sich nur mit Stoffnomina kombinieren lässt.
+Der Determinierer und das Nomen selegieren einander sozusagen (mutuelle Selektion).
+Ansonsten macht der Nullartikel nichts.
+Das Nomen selber hätte hier dann anders als in Abschnitt~\ref{sec:lex} eine normale \textsc{subcat}.\\
+
+\begin{avm}
+  \[
+    phon & \<\> \\
+    cat|head & \[ \asort{det}
+      spec|cat|head & \[ \asort{mass-noun} \] \\
+    \] \\
+  \]
+\end{avm}\\
+
+\noindent Das ergibt dann NPs wie die folgende:\\
+
+\begin{avm}
+  \[ 
+    phon & \<\rm\it Zement\> \\
+    cat & \[
+      head & \@1 \\
+      subcat & \<\> \\
+    \] \\
+    hd-dtr & \[
+      phon & \<\rm\it Zement\> \\
+      cat & \[
+        head & \@1  \\
+        subcat & \< \@2 \[ cat|head & \[ \asort{det} \] \] \> \\
+      \] \\
+    \] \\
+    non-hd-dtr & \@2 \[
+      phon & \<\> \\
+      cat & \[
+        head & \[ \asort{det}
+          spec|cat|head & \@1 \[ \asort{mass-noun} \] \\
+        \]
+      \] \\
+    \]
+  \]
+\end{avm}\\
+
+\noindent Diese Lösung ist zusätzlich zu ihrer komputationalen Inferiorität etwas ungünstig, weil wir noch weitere Regeln brauchen, um die Semantik von Stoffnomina mit Determinierer zu modellieren (sortale Lesart und Portionslesart).
+Ansonsten würden sich normale Artikel mit den Stoffnomina verbinden, und wir könnten die besondere Semantik dabei nicht erzwingen.
+Es wäre eine alternative (aber unintuitive) Möglichkeit, Stoffnomina lexikalisch als sortal zu definieren und den Nullartikel zu verwenden, um dann echte Stoffnomina aus ihnen zu machen.
+
+\end{document}
+

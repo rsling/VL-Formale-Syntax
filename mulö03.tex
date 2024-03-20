@@ -1,0 +1,553 @@
+\documentclass[10pt,a3paper]{article}
+
+\usepackage[margin=2cm]{geometry}
+
+\usepackage{booktabs}
+\usepackage{color}
+\usepackage{soul}
+\usepackage[linecolor=gray,backgroundcolor=yellow!50,textsize=tiny]{todonotes}
+\usepackage[linguistics]{forest}
+\usepackage{styles/my-gb4e-slides}
+
+\usepackage{avm}
+
+\usepackage[maxbibnames=99,
+  maxcitenames=2,
+  uniquelist=false,
+  backend=biber,
+  doi=false,
+  url=false,
+  isbn=false,
+  bibstyle=biblatex-sp-unified,
+  citestyle=sp-authoryear-comp]{biblatex}
+
+\addbibresource{register.bib}
+
+\newcommand{\eg}{e.\,g.}
+\newcommand{\Eg}{E.\,g.}
+
+\definecolor{rot}{rgb}{0.7,0.2,0.0}
+\newcommand{\rot}[1]{\textcolor{rot}{#1}}
+\definecolor{blau}{rgb}{0.1,0.2,0.7}
+\newcommand{\blau}[1]{\textcolor{blau}{#1}}
+\definecolor{gruen}{rgb}{0.0,0.7,0.2}
+\newcommand{\gruen}[1]{\textcolor{gruen}{#1}}
+\definecolor{grau}{rgb}{0.6,0.6,0.6}
+\newcommand{\grau}[1]{\textcolor{grau}{#1}}
+\definecolor{orongsch}{RGB}{255,165,0}
+\newcommand{\orongsch}[1]{\textcolor{orongsch}{#1}}
+\definecolor{tuerkis}{RGB}{63,136,143}
+\definecolor{braun}{RGB}{108,71,65}
+\newcommand{\tuerkis}[1]{\textcolor{tuerkis}{#1}}
+\newcommand{\braun}[1]{\textcolor{braun}{#1}}
+
+\newcommand*{\mybox}[1]{\framebox{#1}}
+
+\forestset{
+  decide/.style={draw, chamfered rectangle, inner sep=2pt},
+  finall/.style={rounded corners, fill=gray, text=white},
+  intrme/.style={draw, rounded corners},
+  yes/.style={edge label={node[near end, above, sloped, font=\scriptsize]{Ja}}},
+  no/.style={edge label={node[near end, above, sloped, font=\scriptsize]{Nein}}}
+}
+
+\author{Roland Schäfer}
+\title{HPSG: Musterlösung 3}
+\date{\today}
+
+\usepackage{fontspec}
+\defaultfontfeatures{Ligatures=TeX,Numbers=OldStyle, Scale=MatchLowercase}
+\setmainfont{Linux Libertine O}
+\setsansfont{Linux Biolinum O}
+
+\avmfont{\sc}
+\avmsortfont{\it}
+\avmvalfont{\it}
+
+\pagestyle{empty}
+
+\begin{document}
+
+\maketitle
+
+\thispagestyle{empty}
+
+\section{Material}
+
+\noindent Es geht hier ausschließlich um Satz (\ref{ex:satz}).
+
+\begin{exe}
+  \ex Die Freude wegen der Geschenke macht glücklich.\label{ex:satz}
+\end{exe}
+
+\section{Eintrag für \textit{wegen}}
+
+\subsection{Ohne Semantik (wie an der Tafel)}
+
+Statt einen Typ wie \textit{ne} oder \textit{nelist} (für \textit{non-empty list}) zu bemühen, habe ich hier unter \textsc{cat|head|mod|cat|subcat} die Beschreibung eines Determinierers kodiert.
+Das würde beides für unsere Zwecke ungefähr gleich gut funktionieren.
+Für Nomina mit komplexerer Valenz bzw.\ relationale Nomina (wie \textit{Eroberung}) müsste man überlegen, ob eine Version wie hier in der Musterlösung nicht besser ist.\\
+
+\begin{avm}
+  \[ \asort{word}
+    phon & \<\rm\it wegen\> \\
+    cat & \[
+      head & \[
+        \asort{prep}
+        mod | cat & \[
+            head & \[ \asort{noun} \] \\
+            subcat & \< \[ cat | head & \[ \asort{det} \]\] \>
+          \]
+      \]  \\
+      subcat & \<\[
+        cat \[
+          head & \[ \asort{noun}
+            case & gen
+          \]\\
+          subcat & \<\>\\
+        \]
+      \]\>\\
+    \] \\
+  \]
+\end{avm}
+
+
+\subsection{Mit Semantik}
+
+Ich habe im Seminar die Indices, die hier \mybox{1} und \mybox{3} numeriert sind, verdreht.
+Hier ist es jetzt richtig.
+Überlegen Sie, was das Problem gewesen wäre.
+Es tritt auf, wenn Semantik der gesamten Phrase ((\textit{die}) \textit{Freude wegen der Geschenke}) zusammengebaut wird bzw.\ wenn sich diese NP mit dem Verb verbindet.\\
+
+\begin{avm}
+  \[ \asort{word}
+    phon & \<\rm\it wegen\> \\
+    cat & \[
+      head & \[
+        \asort{prep}
+        mod & \[
+          cat & \[
+            head & \[ \asort{noun} \] \\
+            subcat & \< \[ cat | head & \[ \asort{det} \]\] \>
+          \] \\
+          \rot{cont} & \rot{\[
+            index & \@1 \\
+            restr & \@2 \\
+          \]}
+        \]
+      \]  \\
+      subcat & \<\[
+        cat & \[
+          head & \[ \asort{noun}
+            case & gen
+          \]\\
+          subcat & \<\>\\
+        \] \\
+        \rot{cont} & \rot{\[
+          index & \@3 \\
+          restr & \@4 \\
+        \]}\\
+      \]\>\\
+    \] \\
+    \rot{cont} & \rot{\[
+      ind & \@1 \\
+      restr & \< 
+      \[ \asort{cause-rel}
+        cause & \@3 \\
+        effect & \@1  \\
+      \]
+      \> $\oplus$ \@2 $\oplus$ \@4 \\
+    \]}
+  \]
+\end{avm}
+
+\newpage
+
+\subsection{PP}\label{sec:pp}
+
+\noindent Verglichen mit dem Lexikoneintrag ist hier die Information der \textsc{subcat} von \textit{wegen} in der Darstellung zu \textsc{nhd-dtr} verschoben (s.\ \mybox{11}).
+Was unter 11 steht, muss aber unifizieren mit der Information auf der \textsc{subcat} des Lexikoneintrags.
+  Überprüfen Sie, ob das so ist.\\
+
+\begin{avm}
+  \[
+    \asort{hd-arg-phrase}
+    phon & \<\rm\it wegen der Geschenke\> \\
+    cat & \[
+      head & \orongsch{\@{10}} \\
+      subcat & \<\> \\
+    \] \\
+    cont & \blau{\@{20}} \\
+    hd-dtr & \[ \asort{word}
+      phon & \<\rm\it wegen\> \\
+      cat & \[
+        head & \orongsch{\@{10}} \[
+          \asort{prep}
+          mod & \[
+            cat & \[
+              head & \[ \asort{noun} \] \\
+              subcat & \< \[ cat | head & \[ \asort{det} \]\] \>
+            \] \\
+            cont & \[
+              index & \@1 \\
+              restr & \@2 \\
+            \]
+          \]
+        \]  \\
+        subcat & \< \gruen{\@{11}} \>\\
+      \] \\
+      cont & \blau{\@{20}} \[
+        ind & \@1 \\
+        restr & \< 
+        \[ \asort{cause-rel}
+          cause & \@3 \\
+          effect & \@1  \\
+        \]
+        \> $\oplus$ \@2 $\oplus$ \@4 \\
+      \]
+    \] \\
+    nhd-dtr & \gruen{\@{11}} \[ \asort{hd-arg-phrase}
+      phon & \<\rm\it der Geschenke \> \\
+      cat & \[ head & \[ \asort{noun}
+        case & gen \\
+        num & pl \\
+        \] \\
+        subcat & \<\> \\
+      \] \\
+      cont & \[
+            index & \@3 \\
+            restr & \@4 \< \[ \asort{geschenke-rel}
+              instance & \@3 \\
+            \]\>\\
+          \]\\ \\
+    \]
+  \]
+\end{avm}
+
+\newpage
+
+\section{$\bar{N}$ mit PP-Modifikator}
+
+\noindent Auch hier wurde wieder in der Darstellung verschoben.
+Statt unter dem \textsc{mod} Merkmal von \textit{wegen der Geschenke} ist die Beschreibung der modifizierten Phrase komplett in \textsc{hd-dtr} (\textit{Freude}) verschoben (s.\ \mybox{30}).
+Was dort steht, muss aber mit dem \textsc{cat|head|mod} von \textit{wegen der Geschenke} (s.\ \ref{sec:pp}) unifizieren.
+Überprüfen Sie, ob das so ist.\\
+
+\begin{avm}
+  \[ \asort{hd-mod-phrase}
+    phon & \<\rm\it Freude wegen der Geschenke\> \\
+    cat & \[
+      head & \braun{\@{31}} \\
+      subcat & \braun{\@{32}} \\
+    \]\\
+    cont & \blau{\@{20}} \\
+    hd-dtr & \tuerkis{\@{30}} \[ \asort{word}
+      phon & \<\rm\it Freude \> \\
+      cat & \[
+        head & \braun{\@{31}} \[ \asort{noun} 
+          case & nom \\
+          num & sg \\
+        \] \\
+        subcat & \braun{\@{32}} \< \[ cat | head & \[ \asort{det} \]\] \>
+      \] \\
+      cont & \[
+        index & \@1 \\
+        restr & \@2 \\
+      \]
+    \] \\
+    nhd-dtr & \[
+      \asort{hd-arg-phrase}
+      phon & \<\rm\it wegen der Geschenke\> \\
+      cat & \[
+        head & \orongsch{\@{10}} \\
+        subcat & \<\> \\
+      \] \\
+      cont & \blau{\@{20}} \\
+      hd-dtr & \[ \asort{word}
+        phon & \<\rm\it wegen\> \\
+        cat & \[
+          head & \orongsch{\@{10}} \[
+            \asort{prep}
+            mod & \tuerkis{\@{30}} 
+          \]  \\
+          subcat & \< \gruen{\@{11}} \>\\
+        \] \\
+        cont & \blau{\@{20}} \[
+          ind & \@1 \\
+          restr & \< 
+          \[ \asort{cause-rel}
+            cause & \@3 \\
+            effect & \@1  \\
+          \]
+          \> $\oplus$ \@2 $\oplus$ \@4 \\
+        \]
+      \] \\
+      nhd-dtr & \gruen{\@{11}} \[ \asort{hd-arg-phrase}
+        phon & \<\rm\it der Geschenke \> \\
+        cat & \[ head & \[ \asort{noun}
+          case & gen \\
+          num & pl \\
+          \] \\
+          subcat & \<\> \\
+        \] \\
+        cont & \[
+              index & \@3 \\
+              restr & \@4 \< \[ \asort{geschenke-rel}
+                instance & \@3 \\
+              \]\>\\
+            \]\\ \\
+      \]
+    \] 
+  \]
+\end{avm}
+
+\section{Spezifikation}
+
+\subsection{Lexikoneintrag einfacher Determinierer}
+
+Hier brauchen wir \textsc{spec} eigentlich gar nicht.\\
+
+\begin{avm}
+  \[ \asort{word}
+    phon & \<\rm\it die\> \\
+    cat & \[
+      head & \[ \asort{det} 
+        spec & none \\
+      \]\\
+    \] \\
+  \]
+\end{avm}
+
+\subsection{Lexikoneintrag \textit{Ischariot}}
+
+\noindent Der Typ \textit{proper-name} sei ein Untertyp von \textit{noun}.\\
+
+\noindent Konstante Individuen wie Ischariot sollten nicht über eine Relation identifiziert werden.
+Ich gehe hier davon aus, dass ein Eigenname einen \textbf{konstanten Index} beisteuert, der fest auf ein \textsc{indiv(idual)} verweist.
+Auch das ist mal wieder etwas fürs Semantik-Seminar.\\
+
+\begin{avm}
+  \[ \asort{stem}
+    phon & \<\rm\it Ischariot \> \\
+    cat & \[
+      head & \[ \asort{proper-name}
+      \]\\
+    \] \\
+    cont & \[
+      index & \@1 \[
+        gen & masc \\
+        indiv & ischariot \\
+      \]\\
+    \]\\
+  \]
+\end{avm}
+
+\subsection{DLR für Eigennamengenitiv}
+
+\noindent Ich nehme hier keine Besitz-Relation an, sondern eine allgemeinere \textit{attribution-rel}.\\
+
+\begin{avm}
+  \[ \asort{proper-name-genitive-lex-rule}
+    phon & \@1 $\oplus$ \<\rm\it s\> \\
+    cat & \[
+      head & \[ \asort{det}
+        case & gen \\
+        spec & \[ cont|ind & \@3 \]\\
+      \] \\
+    \]  \\
+    cont & \[
+      restr & \< \[ \asort{attribution-rel}
+        attribute & \@2 \\
+        attributed & \@3 \\
+      \]\> \\
+    \] \\
+    lex-dtr & \[ \asort{stem}
+      phon & \@1 \\
+      cat & \[
+        head & \[ \asort{proper-name} \] \\
+      \] \\
+      cont|ind & \@2 \\
+    \]\\
+  \]
+\end{avm}\\
+
+\subsection{Anwendung der DLR auf \textit{Ischariot}}
+
+Das Ergebnis kann dann als Determinierer verwendet werden.\\
+
+\begin{avm}
+  \[ \asort{proper-name-genitive-lex-rule}
+    phon & \<\rm\it Ischariot, s\> \\
+    cat & \[
+      head & \[ \asort{det}
+        case & gen \\
+        spec & \[ cont|ind & \@3 \]\\
+      \] \\
+    \]  \\
+    cont & \[
+      restr & \< \[ \asort{attribution-rel}
+        attribute & \@2 \\
+        attributed & \@3 \\
+      \]\> \\
+    \] \\
+    lex-dtr & \[ \asort{stem}
+      phon & \<\rm\it Ischariot \> \\
+      cat & \[
+        head & \[ \asort{proper-name}
+        \]\\
+      \] \\
+      cont & \[
+        index & \@2 \[
+          gen & masc \\
+          indiv & ischariot \\
+        \]\\
+      \]\\
+    \]\\
+  \]
+\end{avm}\\
+
+\noindent Anmerkung: Es geht auch eleganter und ohne, dass man aus einem Nominalstamm einen Determinierer machen muss, was etwas unnatürlich ist.
+Dann muss die \textsc{subcat} von Nomina entsprechend angepasst werden.
+Überlegen Sie, wie das gehen würde.
+
+\newpage
+
+\subsection{NP mit modifizierender PP und Genitiv-\textsc{spec}}
+
+Das \textsc{spec}-Prinzip stellt dann sicher, dass der pränominale Genitiv (\textit{Ischariots}) das \textsc{attributed}-Argument der \textit{attribution-rel} mit dem Index von \textit{Freude} identifizieren kann.\\
+
+\noindent Wenn Sie genau hinsehen, können Sie feststellen, dass noch etwas fehlt.
+Die Semantik der gesamten Phrase (also \mybox{20}) wird noch nicht korrekt modelliert.
+Überlegen Sie, warum das so ist, und was man tun könnte, um das Problem zu lösen.\\
+
+\begin{avm}
+  \[ \asort{hd-arg-phrase}
+    phon & \<\rm\it Ischariots Freude über die Geschenke \> \\
+    cat & \[
+      head & \@{31} \\
+      subcat & \<\> \\
+    \]\\
+    cont & \@{20} \\
+    nhd-dtr & \@{400} \[
+      \asort{proper-name-genitive-lex-rule}
+      phon & \<\rm\it Ischariots\> \\
+      cat & \[
+        head & \[ \asort{det}
+          case & gen \\
+          spec & \@{300} \\
+        \] \\
+      \]  \\
+      cont & \[
+        restr & \< \[ \asort{attribution-rel}
+          attribute & \@{200} \\
+          attributed & \@{1} \\
+        \]\> \\
+      \] \\
+      lex-dtr & \[ \asort{stem}
+        phon & \<\rm\it Ischariot \> \\
+        cat & \[
+          head & \[ \asort{proper-name}
+          \]\\
+        \] \\
+        cont & \[
+          index & \@{200} \[
+            gen & masc \\
+            indiv & ischariot \\
+          \]\\
+        \]\\
+      \]\\
+    \] \\
+    hd-dtr & \@{300} \[ \asort{hd-mod-phrase}
+      phon & \<\rm\it Freude wegen der Geschenke\> \\
+      cat & \[
+        head & \braun{\@{31}} \\
+        subcat & \braun{\@{32} \< \@{400} \>} \\
+      \]\\
+      cont & \blau{\@{20}} \\
+      hd-dtr & \tuerkis{\@{30}} \[ \asort{word}
+        phon & \<\rm\it Freude \> \\
+        cat & \[
+          head & \braun{\@{31}} \[ \asort{noun} 
+            case & nom \\
+            num & sg \\
+          \] \\
+          subcat & \braun{\@{32}} 
+        \] \\
+        cont & \[
+          index & \@1 \\
+          restr & \@2 \\
+        \]
+      \] \\
+      nhd-dtr & \[
+        \asort{hd-arg-phrase}
+        phon & \<\rm\it wegen der Geschenke\> \\
+        cat & \[
+          head & \orongsch{\@{10}} \\
+          subcat & \<\> \\
+        \] \\
+        cont & \blau{\@{20}} \\
+        hd-dtr & \[ \asort{word}
+          phon & \<\rm\it wegen\> \\
+          cat & \[
+            head & \orongsch{\@{10}} \[
+              \asort{prep}
+              mod & \tuerkis{\@{30}} 
+            \]  \\
+            subcat & \< \gruen{\@{11}} \>\\
+          \] \\
+          cont & \blau{\@{20}} \[
+            ind & \@1 \\
+            restr & \< 
+            \[ \asort{cause-rel}
+              cause & \@3 \\
+              effect & \@1  \\
+            \]
+            \> $\oplus$ \@2 $\oplus$ \@4 \\
+          \]
+        \] \\
+        nhd-dtr & \gruen{\@{11}} \[ \asort{hd-arg-phrase}
+          phon & \<\rm\it der Geschenke \> \\
+          cat & \[ head & \[ \asort{noun}
+            case & gen \\
+            num & pl \\
+            \] \\
+            subcat & \<\> \\
+          \] \\
+          cont & \[
+                index & \@3 \\
+                restr & \@4 \< \[ \asort{geschenke-rel}
+                  instance & \@3 \\
+                \]\>\\
+              \]\\ \\
+        \]
+      \] 
+    \]
+  \]
+\end{avm}
+
+
+
+
+
+
+
+\end{document}
+
+
+\begin{avm}
+  \[ \asort{word}
+    phon & \<\rm\it \> \\
+    cat & \[
+      head & \[ \asort{}
+      \]\\
+      subcat & \<\> \\
+    \] \\
+    cont & \[
+      index & \\
+      restr & \<\> \\
+    \]\\
+  \]
+\end{avm}
+
+
+

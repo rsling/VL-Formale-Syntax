@@ -1,0 +1,428 @@
+\documentclass[10pt,a3paper]{article}
+
+\usepackage[margin=2cm]{geometry}
+
+\usepackage{booktabs}
+\usepackage{color}
+\usepackage{soul}
+\usepackage[linecolor=gray,backgroundcolor=yellow!50,textsize=tiny]{todonotes}
+\usepackage[linguistics]{forest}
+\usepackage{styles/my-gb4e-slides}
+
+\usepackage{avm}
+
+\usepackage[maxbibnames=99,
+  maxcitenames=2,
+  uniquelist=false,
+  backend=biber,
+  doi=false,
+  url=false,
+  isbn=false,
+  bibstyle=biblatex-sp-unified,
+  citestyle=sp-authoryear-comp]{biblatex}
+
+\addbibresource{register.bib}
+
+\newcommand{\eg}{e.\,g.}
+\newcommand{\Eg}{E.\,g.}
+
+\definecolor{rot}{rgb}{0.7,0.2,0.0}
+\definecolor{blau}{rgb}{0.1,0.2,0.7}
+\definecolor{gruen}{rgb}{0.0,0.7,0.2}
+\definecolor{grau}{rgb}{0.6,0.6,0.6}
+\definecolor{orongsch}{RGB}{255,165,0}
+\definecolor{tuerkis}{RGB}{63,136,143}
+\definecolor{braun}{RGB}{108,71,65}
+\definecolor{pinku}{RGB}{255,180,200}
+\definecolor{violett}{RGB}{150,50,250}
+
+% \definecolor{rot}{rgb}{0,0,0}
+% \definecolor{blau}{rgb}{0,0,0}
+% \definecolor{gruen}{rgb}{0,0,0}
+% \definecolor{grau}{rgb}{0,0,0}
+% \definecolor{orongsch}{RGB}{0,0,0}
+% \definecolor{tuerkis}{RGB}{0,0,0}
+% \definecolor{braun}{RGB}{0,0,0}
+% \definecolor{pinku}{RGB}{0,0,0}
+% \definecolor{violett}{RGB}{0,0,0}
+
+\newcommand{\rot}[1]{\textcolor{rot}{#1}}
+\newcommand{\blau}[1]{\textcolor{blau}{#1}}
+\newcommand{\gruen}[1]{\textcolor{gruen}{#1}}
+\newcommand{\grau}[1]{\textcolor{grau}{#1}}
+\newcommand{\orongsch}[1]{\textcolor{orongsch}{#1}}
+\newcommand{\tuerkis}[1]{\textcolor{tuerkis}{#1}}
+\newcommand{\braun}[1]{\textcolor{braun}{#1}}
+\newcommand{\pinku}[1]{\textcolor{pinku}{#1}}
+\newcommand{\violett}[1]{\textcolor{violett}{#1}}
+
+\newcommand*{\mybox}[1]{\framebox{#1}}
+
+\forestset{
+  decide/.style={draw, chamfered rectangle, inner sep=2pt},
+  finall/.style={rounded corners, fill=gray, text=white},
+  intrme/.style={draw, rounded corners},
+  yes/.style={edge label={node[near end, above, sloped, font=\scriptsize]{Ja}}},
+  no/.style={edge label={node[near end, above, sloped, font=\scriptsize]{Nein}}}
+}
+
+\newcommand{\Sub}[1]{\ensuremath{_{\text{#1}}}}
+\newcommand{\Up}[1]{\ensuremath{^{\text{#1}}}}
+\newcommand{\UpSub}[2]{\ensuremath{^{\text{#1}}_{\text{#2}}}}
+\newcommand{\Zeile}{\vspace{\baselineskip}}
+\newcommand{\Halbzeile}{\vspace{0.5\baselineskip}}
+\newcommand{\Viertelzeile}{\vspace{0.25\baselineskip}}
+
+
+\author{Roland Schäfer}
+\title{HPSG: Lösungsansatz (Musterlösung 6)}
+\date{\today}
+
+\usepackage{fontspec}
+\defaultfontfeatures{Ligatures=TeX,Numbers=OldStyle, Scale=MatchLowercase}
+\setmainfont{Linux Libertine O}
+\setsansfont{Linux Biolinum O}
+
+\avmfont{\sc}
+\avmsortfont{\it}
+\avmvalfont{\it}
+
+\pagestyle{empty}
+
+\setlength\parindent{0pt}
+
+\begin{document}
+
+\maketitle
+
+\thispagestyle{empty}
+
+\section{Material}
+
+Es geht hier ausschließlich um Satz (\ref{ex:satz}).
+
+\begin{exe}
+  \ex Meistens filmt Dan.\label{ex:satz}
+\end{exe}
+
+\section{Lexikoneinträge}\label{sec:lex}
+
+\begin{avm}
+  \[ \asort{word}
+    phon & \<\rm\it Dan \> \\
+    loc|cat & \[
+      head & \[ \asort{noun}
+        cas & nom $\vee$ acc $\vee$ dat\\
+        num & sg \\
+      \]\\
+      subcat & \<\> \\
+    \] \\
+  \]
+\end{avm}
+
+\begin{avm}
+  \[ \asort{word}
+    phon & \<\rm\it filmt\> \\
+    loc|cat & \[
+      head & \[ \asort{verb}
+        vform & fin \\
+        initial & $-$ \\
+      \]\\
+      subcat & \<\[
+        loc|cat & \[
+          head & \[ \asort{noun}
+            cas & nom \\
+            num & sg \\
+          \]\\
+          subcat & \<\> \\
+        \] \\
+      \]
+      \> \\
+    \] \\
+  \]
+\end{avm}
+
+\begin{avm}
+  \[\asort{word}
+    phon & \<\rm\it meistens \> \\
+    loc & \[
+      cat & \[
+        head & \[
+          mod & \@{100} \[
+            loc & \[
+              cat|head & \[ \asort{verb} \] \\
+              cont & \@{1} \\
+            \] \\
+          \] \\
+        \] \\
+        subcat & \<\> \\
+      \] \\
+      cont & \[\asort{psoa}
+        restr & \[\asort{most-of-the-time-rel}
+          pso-arg & \@{1} \\
+        \] \\
+      \] \\
+    \] \\
+  \]
+\end{avm}
+
+\subsection{Spuren}
+
+\subsubsection{Verbspur}
+
+\begin{avm}
+  \[ phon & \<\> \\
+    loc  & \@{100} \[cat|head|dsl & \@{100}\] \\
+  \]
+\end{avm}
+
+\subsubsection{Argumentspur}
+
+\begin{avm}
+	\[\asort{word}
+		phon & \<\> \\
+                loc  & \orongsch{\@{200}} \\
+                nonloc & \[slash & \<\orongsch{\@{200}} \>\]
+	\]
+\end{avm}
+
+\section{Aufbau des Satzes}
+
+\subsection{Struktur mit Semantik-Skizze}
+
+\scalebox{0.8}{%
+\begin{avm}
+  \[ \asort{hd-filler-phr}
+    phon & \<\rm\it Meistens filmt \_ Dan \_\> \\
+    loc & \[ cat & \[
+      head & \tuerkis{\@{80}} \\
+      subcat & \<\> \\
+    \] \\
+    \violett{cont} & \violett{\@{1000}} \\
+  \] \\
+    nonloc|slash & \<\> \\
+    filler-dtr & \[
+      phon & \<\rm\it meistens \> \\
+      loc & \orongsch{\@{200} \[
+        cat & \[
+          head & \[
+            mod & \blau{\@{100} \[
+              loc|cat|head & \[ \asort{verb} \] \\
+            \]} \\
+          \] \\
+          subcat & \<\> \\
+        \] \\
+        \violett{cont} & \violett{\@{1000}} \\
+      \]} \\
+      nonloc|slash & \<\> \\
+    \] \\
+    hd-dtr & \[ \asort{hd-arg-phr}
+      phon & \<\rm\it filmt \_ Dan \_ \> \\
+      loc & \[ cat & \[
+        head & \tuerkis{\@{80}} \\
+        subcat & \<\> \\
+      \] \\
+      \violett{cont} & \violett{\@{1000}} \\
+    \] \\
+      nonloc|slash & \<\orongsch{\@{200}}\> \\
+      hd-dtr & \[\asort{v1-lr}
+          phon & \<\rm\it filmt \_\_\_\>\\
+          loc & \[ cat & \[
+            head & \tuerkis{\@{80} \[ \asort{verb}
+              vform & fin \\
+              initial & $+$ \\
+            \]} \\
+            subcat & \<\braun{\@{50} \[loc & \[ cat & \[
+            head|dsl & \rot{\@{1}} \\
+            subcat & \<\> \\
+          \]\] \\
+          \violett{cont} & \violett{\@{1000}} \\
+          \]}\> \\
+          \] \\
+          \violett{cont} & \violett{\@{1000}} \\
+          \] \\ 
+          nonloc|slash & \<\> \\
+          lex-dtr & \[
+            phon & \<\rm\it filmt\> \\
+            loc & \rot{\@{1} \[ cat & \[
+              head & \gruen{\@{10}} \\
+              subcat & \<\[
+                \pinku{\@{90} loc|cat} & \pinku{\[
+                head & \[ \asort{noun}
+                  cas & nom \\
+                  num & sg \\
+                \]\\
+                subcat & \<\> \\
+              \]} \\
+            \]\>
+          \] \\
+          \violett{cont} & \violett{\@{1002} \[ \asort{psoa}
+            restr & \<\[\asort{film-rel} 
+              agent & \@{1003} \\
+            \]\> \\
+          \]}\\
+        \]} \\
+        \]\\
+      \] \\
+      nhd-dtr & \braun{\@{50} \[ \asort{hd-mod-phr}
+        phon & \<\rm\it \_ Dan \_ \> \\
+        loc & \[ cat|head & \gruen{\@{10}} \\
+          \violett{cont} & \violett{\@{1000}\[
+            restr & \<\[\asort{most-of-the-time-rel}
+            psoa-arg & \@{1002} \\
+          \]\>\]}\\
+        \] \\
+        nonloc|slash & \<\orongsch{\@{200}}\> \\
+        nhd-dtr & \[
+          phon & \<\> \\
+          loc & \orongsch{\@{200}\[
+            \violett{cont} & \violett{\@{1000}} \\
+          \]}  \\
+          nonloc|slash & \<\orongsch{\@{200}}\> \\
+        \]\\
+        hd-dtr & \blau{\@{100} \[ \asort{hd-arg-phr}
+          phon & \<\rm\it Dan \_ \> \\
+          loc & \[ cat & \[
+            head & \gruen{\@{10} \[ \asort{verb}
+              vform & fin \\
+              initial & $-$ \\
+            \]}\\
+            subcat & \<\> \\
+          \] \\
+          \violett{cont} & \violett{\@{1002}\[\asort{psoa}
+            restr & \< \[ \asort{film-rel}
+              agent & \@{1003}
+            \]\> \\
+          \]} \\
+        \] \\
+          nonloc|slash & \<\> \\
+          hd-dtr & \[ \asort{word}
+            phon & \<\> \\
+            loc & \rot{\@{1} \[
+              cat & \[
+                head & \gruen{\@{10} \[ \asort{verb}
+                  dsl & \@{1} \\
+                \]}\\
+                \violett{cont} & \violett{\@{1002}} \\
+              \]
+            \]} \\
+          nonloc|slash & \<\> \\
+          \] \\
+          nhd-dtr & \pinku{\@{90} \[ \asort{word}
+            phon & \<\rm\it Dan\> \\
+            loc & \[ cat & \[
+              head & \[ \asort{noun}
+                case & nom \\
+                num & sg \\
+              \]\\
+              subcat & \<\> \\
+            \] \\
+            \violett{cont} & \violett{\[
+              index & \@{1003} \[
+                indiv & dan \\
+              \] \\
+            \]} \\
+          \]\\
+          nonloc|slash & \<\> \\
+          \]} \\
+        \]} \\
+      \]}
+    \]
+  \]
+\end{avm}%
+}
+
+\newpage
+
+\subsection{Erläuterungen zur Semantik}
+
+Im Baum sind \violett{alle \textsc{cont}-Werte violett.}\\
+
+Wir gehen hier von unten nach oben durch die Struktur und motivieren die Semantik.
+Es wird jeweils der komplette Pfad durch die Struktur und der \textsc{phon}-Wert der Konstituente angegeben, damit klar ist, welcher \textsc{cont} gemeint ist.
+
+\subsubsection{\textsc{hd-dtr|nhd-dtr|hd-dtr|nhd-dtr} (\textit{Dan})}
+
+Das ist die lexikalische Semantik eines Eigennamens. 
+Er bringt einen Index mit, der konstant auf eine Person verweist.
+
+\subsubsection{\textsc{hd-dtr|nhd-dtr|hd-dtr|hd-dtr} (Verbspur)}
+
+Die Verbspur bekommt ihre Semantik über \textsc{dsl} von ganz oben aus der \textsc{lex-dtr} des bewegten Verbs (\textsc{hd-dtr|hd-dtr|lex-dtr}), s.\ \mybox{1002}.
+Dort sehen wir, dass die Semantik ein \textsc{psoa} ist, der als \textsc{restr} nur eine \textit{film-rel} mitbringt, die ein Agens hat.
+
+\subsubsection{\textsc{hd-dtr|nhd-dtr|hd-dtr} (\textit{Dan \_})}\label{sec:danvspur}
+
+Die Semantik ist wieder die \mybox{1002} dank des Semantikprinzips (Teil 1 für \textsc{head-arg-phrase}).
+Hier wird in der Darstellung die Identifikation des rollentragenden Index \mybox{1003} mit der Agens-Rolle des Verbs angezeigt.
+(Aber wie üblich Obacht bitte: Überall wo \mybox{1002} steht, steht dank Unifikation und Strukturteilung dasselbe.)\\
+
+Hinweis: Ich habe im Seminar zum Schluss etwas stark gesagt, dass über \textsc{dsl} die lexikalische Semantik des Verbs protokolliert werde.
+Das stimmt auch, aber natürlich werden die normalen Rollen mit Indizes unifiziert wie in jeder Valenzabbindung, und das ist dank Strukturteilung dann auch unter \textsc{dsl} sichtbar.
+Was in \textsc{dsl} nicht überschrieben wird ist die prinzipielle Semantik des Verbs\slash der Verbspur, so wie es hier eine Etage höher durch den Modifizierer geschieht.
+Das passiert dann zwar in der Phrasensemantik, nicht aber in \textsc{dsl}.
+
+\subsubsection{\textsc{hd-dtr|nhd-dtr|nhd-dtr} (Adjunktspur)}\label{sec:aspur}
+
+Hier steht die Semantik, die weiter oben (beim Filler) mit \mybox{1000} genau gezeigt wird.
+Weil von hier aufwärte der \textsc{local}-Wert \mybox{200} weitergegeben wird, bis er in Form des Fillers gefüllt wird, ist hier die komplette Syntax-Semantik von \textit{meistens} verfügbar.
+Beachten Sie auch den Lexikoneintrag für \textit{meistens} in Abschnitt~\ref{sec:lex}.
+Was genau passiert, wird eine Etage höher gezeigt:
+
+\subsubsection{\textsc{hd-dtr|nhd-dtr} (\_ Dan \_)}
+
+Über sein \textsc{mod}-Merkmal verschafft sich \textit{wenigstens} Zugriff auf die Semantik des Modifikans (s.\ Lexikoneintrag), in diesem Fall \textit{Dan \_} -- also \mybox{1002}.
+Diese nimmt es als \textsc{psoa-arg}, weil man nicht vernünftig die Menge der \textit{meistenen} Dinge mit denen der \textit{Dan filmt}-Dinge schneiden kann.
+Das hat bei solchen relativ quantifizierenden Zeit-Adverbialen keinen Sinn.\\
+
+Weil es sich um eine \textsc{hd-mod-phr} handelt, kommt die Semantik vom Nicht-Kopf (Semantikprinzip Teil 2), also \mybox{1000} von der Adunktspur.
+
+\subsubsection{\textsc{hd-dtr|hd-dtr|lex-dtr} (\textit{filmt})}
+
+Das ist einfach die lexikalische Semantik von \textit{filmt}.
+S.\ Lexikoneintrag und Abschnitt~\ref{sec:danvspur}.\\
+
+Da diese Semantik Teil des \textsc{local}-Werts \mybox{1} ist, der über \textsc{dsl} zur Spur gelangt, ist sie beim Aufbau der gespurten VP verfügbar.
+Dass dies gelingt, liegt wesentlich daran, dass die \textit{v1-lr} auf ihrer \textsc{subcat} den \textsc{dsl} der gespurten VP mit dem \textsc{local} ihrer \textsc{lex-dtr} identifiziert.
+
+\subsubsection{\textsc{hd-dtr|hd-dtr} (\textit{filmt \_\_\_})}\label{sec:v1lr}
+
+Die \textsc{v1-lr} sagt explizit (s.\ Musterlösung 4), dass sie ihren \textsc{cont} von dem der gespurten VP übernimmt.
+Das geschieht hier über die \mybox{1000}.
+
+\subsubsection{\textsc{hd-dtr} (\textit{filmt \_ Dan \_})}
+
+Dies Semantik in \mybox{1000} wird über Teil 1 des Semantikprinzips von der Kopftochter (s.\ Abschnitt~\ref{sec:v1lr}) übernommen.
+
+\subsubsection{\textsc{filler-dtr} (\textit{meistens})}
+
+Hier wird die Semantik des lexikalischen Eintrags für \textit{meistens} (s.\ Abschnitt~\ref{sec:lex}) mit der der Adjunktspur unifiziert.
+Das wurde bereits in Abschnitt~\ref{sec:aspur} besprochen.
+Das Schema für die \textit{hd-filler-phr} sagt, dass der \textsc{local}-Wert des Fillers mit der Information auf \textsc{slash} unifiziert wird.
+Das ist \mybox{200}, und der \textsc{cont} \mybox{1000} ist Teil davon.
+
+\subsubsection{\textit{hd-filler-phrase} (\textit{Meistens filmt \_ Dan \_})}
+
+Der gesamte Satz hat dank Semantikprinzip die Semantik der Kopftochter, also \mybox{1000}.
+Ausbuchstabiert sieht die Semantik des Satzes so aus:\\
+
+\begin{avm}
+  \[\asort{psoa}
+    restr & \<\[\asort{most-of-the-time-rel}
+      psoa-arg & \[\asort{psoa}
+        restr & \<\[\asort{film-rel}
+          agent & \[\asort{index}
+            indiv & dan \\
+          \]\\
+        \]\>
+      \]
+    \]\>
+  \]
+\end{avm}
+
+\Zeile
+
+Umgangssprachlich heißt das, dass es eine Situation gibt, in der es meistens der Fall ist, dass es eine \textit{Filmen}-Situation gibt, in der Dan das Agens ist.
+Das passt ja auch ziemlich genau zur Bedeutung des Satzes.
+
+\end{document}

@@ -1,0 +1,682 @@
+\documentclass[10pt,a3paper]{article}
+
+\usepackage[margin=2cm]{geometry}
+
+\usepackage{booktabs}
+\usepackage{color}
+\usepackage{soul}
+\usepackage[linecolor=gray,backgroundcolor=yellow!50,textsize=tiny]{todonotes}
+\usepackage[linguistics]{forest}
+\usepackage{styles/my-gb4e-slides}
+
+\usepackage{avm}
+
+\usepackage[maxbibnames=99,
+  maxcitenames=2,
+  uniquelist=false,
+  backend=biber,
+  doi=false,
+  url=false,
+  isbn=false,
+  bibstyle=biblatex-sp-unified,
+  citestyle=sp-authoryear-comp]{biblatex}
+
+\addbibresource{register.bib}
+
+\newcommand{\eg}{e.\,g.}
+\newcommand{\Eg}{E.\,g.}
+
+\definecolor{rot}{rgb}{0.7,0.2,0.0}
+\newcommand{\rot}[1]{\textcolor{rot}{#1}}
+\definecolor{blau}{rgb}{0.1,0.2,0.7}
+\newcommand{\blau}[1]{\textcolor{blau}{#1}}
+\definecolor{gruen}{rgb}{0.0,0.7,0.2}
+\newcommand{\gruen}[1]{\textcolor{gruen}{#1}}
+\definecolor{grau}{rgb}{0.6,0.6,0.6}
+\newcommand{\grau}[1]{\textcolor{grau}{#1}}
+\definecolor{orongsch}{RGB}{255,165,0}
+\newcommand{\orongsch}[1]{\textcolor{orongsch}{#1}}
+\definecolor{tuerkis}{RGB}{63,136,143}
+\definecolor{braun}{RGB}{108,71,65}
+\newcommand{\tuerkis}[1]{\textcolor{tuerkis}{#1}}
+\newcommand{\braun}[1]{\textcolor{braun}{#1}}
+
+\newcommand*{\mybox}[1]{\framebox{#1}}
+
+\forestset{
+  decide/.style={draw, chamfered rectangle, inner sep=2pt},
+  finall/.style={rounded corners, fill=gray, text=white},
+  intrme/.style={draw, rounded corners},
+  yes/.style={edge label={node[near end, above, sloped, font=\scriptsize]{Ja}}},
+  no/.style={edge label={node[near end, above, sloped, font=\scriptsize]{Nein}}}
+}
+
+\newcommand{\Sub}[1]{\ensuremath{_{\text{#1}}}}
+\newcommand{\Up}[1]{\ensuremath{^{\text{#1}}}}
+\newcommand{\UpSub}[2]{\ensuremath{^{\text{#1}}_{\text{#2}}}}
+\newcommand{\Zeile}{\vspace{\baselineskip}}
+\newcommand{\Halbzeile}{\vspace{0.5\baselineskip}}
+\newcommand{\Viertelzeile}{\vspace{0.25\baselineskip}}
+
+
+\author{Roland Schäfer}
+\title{HPSG: Musterlösung 4}
+\date{\today}
+
+\usepackage{fontspec}
+\defaultfontfeatures{Ligatures=TeX,Numbers=OldStyle, Scale=MatchLowercase}
+\setmainfont{Linux Libertine O}
+\setsansfont{Linux Biolinum O}
+
+\avmfont{\sc}
+\avmsortfont{\it}
+\avmvalfont{\it}
+
+\pagestyle{empty}
+
+\setlength\parindent{0pt}
+
+\begin{document}
+
+\maketitle
+
+\thispagestyle{empty}
+
+\section{Material}
+
+Es geht hier ausschließlich um Satz (\ref{ex:satz}), wobei \textit{Kiki} und \textit{Die Strudlhofstiege} als unanalysierte Eigennamen (= NPs) behandelt werden sollen.
+
+\begin{exe}
+  \ex Liest Kiki Die Strudlhofstiege?\label{ex:satz}
+\end{exe}
+
+In der gesamten Analyse wird hier die Semantik weggelassen.
+Da aber immer der \textsc{local}-Wert über \textsc{dsl} geteilt wird, wäre \textsc{cont} neben \textsc{cat} überall dabei und könnte die erwartete Wirkung haben.
+
+\section{Lexikoneinträge}\label{sec:lex}
+
+\begin{avm}
+  \[ \asort{word}
+    phon & \<\rm\it Kiki $\vee$ Die Strudlhofstiege\> \\
+    loc|cat & \[
+      head & \[ \asort{noun}
+        cas & nom $\vee$ acc\\
+        num & sg \\
+      \]\\
+      subcat & \<\> \\
+    \] \\
+  \]
+\end{avm}
+
+\begin{avm}
+  \[ \asort{word}
+    phon & \<\rm\it liest\> \\
+    loc|cat & \[
+      head & \[ \asort{verb}
+        vform & fin \\
+        initial & $-$ \\
+      \]\\
+      subcat & \<\[
+        loc|cat & \[
+          head & \[ \asort{noun}
+            cas & nom \\
+            num & sg \\
+          \]\\
+          subcat & \<\> \\
+        \] \\
+      \],
+      \[
+        loc|cat & \[
+          head & \[ \asort{noun}
+            cas & acc \\
+          \]\\
+          subcat & \<\> \\
+        \] \\
+      \]
+      \> \\
+    \] \\
+  \]
+\end{avm}
+
+\section{V1-LR als DLR}\label{sec:v1lr}
+
+\begin{avm}
+  \[ \asort{lex-rule}
+    loc|cat & \[
+      head & \tuerkis{\[ \asort{verb}
+        vform & fin \\
+        \rot{initial} & \rot{$+$} \\
+      \]}\\
+      \gruen{subcat} & \<\[ loc|cat & \[
+        head & \gruen{\[ \asort{verb}
+          \blau{dsl} & \blau{\@1} \\
+        \]}\\
+        \gruen{subcat} & \gruen{\<\>} \\
+      \]
+      \]\> \\
+    \] \\
+    lex-dtr & \[
+      \blau{loc} & \blau{\@1 \[ cat|head & \[ \asort{verb}
+        vform & fin \\
+        \orongsch{initial} & \orongsch{$-$} \\
+      \]
+    \]}
+    \]
+  \]
+\end{avm}
+
+\Zeile
+
+Der Input (\textsc{lex-dtr}) der Regel muss ein \blau{finites Verb} sein, das \orongsch{Verbletztstellung} verlangt.
+Das Ergebnis der Anwendung dieser Regel ist ein \tuerkis{finites Verb}, das \rot{Verberststellung} verlangt.
+Dieses V1-Verb hat eine für ein Verb atypische \gruen{Valenz}, weil es eine \gruen{VP} verlangt, aus der ein \blau{ein finites Verb} extrahiert wurde (\textsc{\blau{dsl}}), welches \orongsch{Verbletztstellung} verlangt.
+Diese Anforderungen werden sichergestellt, weil der \blau{\textsc{local}}-Wert der lexikalischen Tochter strukturgeteilt mit dem der \blau{Verbspur (\textsc{dsl})} ist (\blau{\mybox{1}}).
+
+\newpage
+
+\section{Aufbau des Satzes}
+
+\subsection{Anwendung der V1-LR auf das lexikalische Verb}
+
+Die Farbgebung folgt der in Abschnitt~\ref{sec:v1lr}.
+
+\Zeile
+
+\begin{avm}
+  \[ \asort{lex-rule}
+    phon & \<\rm\it liest\> \\
+    loc|cat & \[
+      head & \tuerkis{\[ \asort{verb}
+        vform & fin \\
+        \rot{initial} & \rot{$+$} \\
+      \]}\\
+      \gruen{subcat} & \<\[ loc|cat & \[
+        head & \gruen{\[ \asort{verb}
+          \blau{dsl} & \blau{\@1} \\
+        \]}\\
+        \gruen{subcat} & \gruen{\<\>} \\
+      \]
+      \]\> \\
+    \] \\
+    lex-dtr & \[ \asort{word}
+    phon & \<\rm\it liest\> \\
+    \blau{loc} & \blau{\@1 \[
+      cat & \[
+        head & \[ \asort{verb}
+          vform & fin \\
+          \orongsch{initial} & \orongsch{$-$} \\
+        \]\\
+        subcat & \<\[
+          loc|cat & \[
+            head & \[ \asort{noun}
+              cas & nom \\
+              num & sg \\
+            \]\\
+            subcat & \<\> \\
+          \] \\
+        \],
+        \[
+          loc|cat & \[
+            head & \[ \asort{noun}
+              cas & acc \\
+            \]\\
+            subcat & \<\> \\
+          \] \\
+        \]
+        \> \\
+      \] \\
+    \]}
+    \]
+  \]
+\end{avm}
+
+\subsection{Verbindung des V1-Verbs mit der VP}\label{sec:top}
+
+Wir wissen jetzt, welche Bedingungen die gespurte VP erfüllen muss, denn das bewegte Verb verbindet sich über die normale Valenzabbindung mit ihr.
+(Mit \textit{gespurte VP} ist stets die VP gemeint, die die Verbspur enthält.)
+Wir beginnen mit einer leicht abgekürzten Version des bewegten Verbs (nur die \textsc{subcat} wurde abgekürzt), auf der \textbf{in der Darstellung} die \blau{\mybox{1}} auf den \blau{\textsc{loc|cat|head|dsl}-Wert der per Valenz geforderten gespurten VP} verschoben wurde.
+Dank Strukturteilung ist das wirklich \textbf{nur} eine Frage der Darstellung.
+Wir beginnen außerdem teilweise eine neue Farbgebung.
+
+\Zeile
+
+\begin{avm}
+  \[ \asort{lex-rule}
+    phon & \<\rm\it liest\> \\
+    loc|cat & \[
+      head & \[ \asort{verb}
+        vform & fin \\
+        initial & $+$ \\
+      \]\\
+      subcat & \<\orongsch{\[ loc|cat & \[
+        head & \[ \asort{verb}
+          \blau{dsl} & \blau{\@1
+          \[
+          cat & \[
+            head & \[ \asort{verb}
+              vform & fin \\
+              initial & $-$ \\
+            \]\\
+            subcat & \< NP\Sub{nom}, NP\Sub{acc} \> \\
+          \] \\
+        \]}\\
+        \]\\
+        subcat & \<\> \\
+      \]
+    \]}\> \\
+    \] \\
+    lex-dtr & \[ \asort{word}
+    phon & \<\rm\it liest\> \\
+    loc & \blau{\@1} 
+    \]
+  \]
+\end{avm}
+
+\newpage
+
+Das erlaubt es uns jetzt, zu sagen, wie die VP auf Satzebene aussehen muss.
+Die \textsc{nhd-dtr} muss beschaffen sein wie auf der Valenz des bewegten Verbs beschrieben.
+Wir können also einfach den gesamten \orongsch{\textsc{subcat}-Eintrag} als Spezifikation der Nichtkopf-Tochter ansetzen (inklusive des enthaltenen \blau{\textsc{dsl}}).
+Die Kopftochter entspricht exakt dem oben spezifizierten bewegten Verb.
+Also verschieben wir nochmals, aber wieder bleibt dank Strukturteilung alles überall erhalten, wir ändern nur die Darstellung.
+Die \textsc{phon}-Werte stehen nur zur Illustration bzw.\ Orientierung.
+Überall dort, wo die Phrase die Spur enthält, ist ein \_ in der Phon an ihrer Stelle eingefügt.
+Auch das dient natürlich nur der Illustration.
+
+\Zeile
+
+\begin{avm}
+  \[ \asort{hd-arg-phrase}
+    phon & \<\rm\it Liest Kiki Die Strudlhofstiege \_\> \\
+    cat & \[
+      head & \tuerkis{\@3} \\
+      subcat & \rot{\@4 \<\>} \\
+    \] \\
+    hd-dtr  & 
+      \[ \asort{lex-rule}
+        phon & \<\rm\it liest\> \\
+        loc|cat & \[
+          head & \tuerkis{\@3 \[ \asort{verb}
+            vform & fin \\
+            initial & $+$ \\
+          \]}\\
+          subcat & \rot{\@4}$\oplus$\<\orongsch{\@2}\> \\
+        \] \\
+        lex-dtr & \[ \asort{word}
+        phon & \<\rm\it liest\> \\
+        loc & \blau{\@1} 
+        \]
+    \] \\
+    nhd-dtr &
+      \orongsch{\@2\[
+        phon & \<\rm\it Kiki Die Strudlhofstiege \_\> \\
+        loc|cat & \[
+          head & \[ \asort{verb}
+            \blau{dsl} & \blau{\@1
+            \[
+            cat & \[
+              head & \[ \asort{verb}
+                vform & fin \\
+                initial & $-$ \\
+              \]\\
+              subcat & \< NP\Sub{nom}, NP\Sub{acc} \> \\
+            \] \\
+          \]}\\
+          \]\\
+          subcat & \<\> \\
+        \]
+      \]}
+  \]
+\end{avm}
+
+\Zeile
+
+Wie auch immer wir die gespurte VP aufbauen, sie muss mit \orongsch{\mybox{2}} unifizieren.
+
+\subsection{Aufbau der gespurten VP}\label{sec:vp}
+
+Wir bauen jetzt die VP auf und gehen nur von der Spur aus.
+Dabei unifizieren wir erstmal alles Mögliche (bei der Valenzabbindung) und schauen, ob das Richtige rauskommt.
+Wir konstruieren die VP sozusagen hypothetisch und ermitteln so, ob sie dann in die Struktur aus Abschnitt~\ref{sec:top} passt. 
+Wenn es dann passt, haben wir eine erfolgreiche Ableitung für den Satz.
+Dieses Darstellung ist eventuell nachvollziehbarer als die statische (korrektere) Denkweise, bei der alles in einem Schritt unifiziert.
+
+Die Spur sieht bekanntlich wiefolgt aus.
+
+\Zeile
+
+\begin{avm}
+  \[ phon & \<\> \\
+    \tuerkis{loc}   & \tuerkis{\@{100} \[cat|head|dsl & \@{100}\]} \\
+  \]
+\end{avm}
+
+\Zeile
+
+Um die Spur als Kopftochter mit \textit{Die Strudlhofstiege} als Nichtkopftochter verbinden zu können, müsste ein passender Eintrag auf der \textsc{subcat} der Spur sein.
+Als Nichtkopftochter wird hier der \orongsch{Eintrag für \textit{Die Strudlhofstiege}} aus Abschnitt~\ref{sec:lex} im Akkusativ eingesetzt.
+Das Resultat sähe also so aus, wobei hier noch nicht klar ist, ob die restliche \textsc{subcat} in \braun{\mybox{102}} leer ist oder nicht.
+
+\Zeile
+
+\begin{avm}
+  \[ \asort{hd-arg-phr}
+    phon & \<\rm\it Die Strudlhofstiege \_ \> \\
+    loc|cat & \[
+      head & \rot{\@{105}} \\
+      subcat & \braun{\@{102}}\\
+    \]\\
+    hd-dtr & \[
+      phon & \<\> \\
+      \tuerkis{loc}   & \tuerkis{\@{100} \[cat & \[
+        head & \rot{\@{105} \[ dsl & \@{100} \]} \\
+      subcat & \braun{\@{102}} $\oplus$ \< \@{101} \> \\
+    \]
+    \]} \\
+    \]\\
+    nhd-dtr & \tuerkis{\@{101}} \orongsch{\[\asort{word}
+      phon & \<\rm\it Die Strudlhofstiege\> \\
+      loc|cat & \[
+        head & \[ \asort{noun}
+          cas & acc\\
+          num & sg \\
+        \]\\
+        subcat & \<\> \\
+      \] \\
+    \]}\\
+  \]
+\end{avm}
+
+\newpage
+
+Diese Projektion können wir jetzt mit dem nächsten Argument \textit{Kiki} verbinden.
+Dazu müsste \braun{\mybox{102}} noch mindestens einen Eintrag enthalten.
+Achtung! Das Label \mybox{102} identifiziert die Konkatenation aus der beliebigen Liste \mybox{103} und der einelementigen Liste \mybox{104}.
+Wir teilen \mybox{102} also noch weiter auf.
+Weil wir ja schon wissen, was rauskommt, gehen wir davon aus, dass \mybox{103} leer ist und zeigen das auf der \textsc{subcat} der gesamten VP an.
+
+\Zeile
+
+\begin{avm}
+  \[ \asort{hd-arg-phr}
+    phon & \<\rm\it Kiki Die Strudlhofstiege \_ \> \\
+    loc|cat & \[
+      head & \rot{\@{105}} \\ 
+      subcat & \braun{\@{103}\ \<\>}\\
+    \]\\
+    hd-dtr &
+    \[ \asort{hd-arg-phr}
+      phon & \<\rm\it Die Strudlhofstiege \_ \> \\
+      loc|cat & \[
+        head & \rot{\@{105}} \\
+        subcat & \braun{\@{102} \@{103}$\oplus$\<\gruen{\@{104}}\>}\\
+      \]\\
+      hd-dtr & \[
+        phon & \<\> \\
+        \tuerkis{loc}   & \tuerkis{\@{100} \[cat & \[
+        head & \rot{\@{105} \[ dsl & \@{100} \]} \\
+        subcat & \braun{\@{102}} $\oplus$ \< \@{101} \> \\
+      \]
+      \]} \\
+      \]\\
+      nhd-dtr & \tuerkis{\@{101}} \orongsch{\[\asort{word}
+        phon & \<\rm\it Die Strudlhofstiege\> \\
+        loc|cat & \[
+          head & \[ \asort{noun}
+            cas & acc\\
+            num & sg \\
+          \]\\
+          subcat & \<\> \\
+        \] \\
+      \]}\\
+    \]\\
+    nhd-dtr & \gruen{\@{104}} \[ \asort{word}
+      phon & \<\rm\it Kiki \> \\
+      loc|cat & \[
+        head & \[ \asort{noun}
+          cas & nom \\
+          num & sg \\
+        \]\\
+        subcat & \<\> \\
+      \] \\
+    \]
+  \]
+\end{avm}
+
+\subsection{Unifizierung der VP mit dem bewegten Verb}
+
+Die Frage ist jetzt, ob das Ergebnis mit der geforderten Struktur aus Abschnitt~\ref{sec:top} zusammenpasst.
+Dazu stellen wir das Endergebnis aus Abschnitt~\ref{sec:vp} ein bisschen um.
+Insbesondere kürzen wir die NPs als \textsc{np\Sub{nom}} (\textit{Kiki}) und \textsc{NP\Sub{acc}} (\textit{Die Strudlhofstiege}) ab und kürzen dann die Struktur um die \textsc{hd-dtr} und \textsc{nhd-dtr}, die weiter oben in der Struktur keine Rolle mehr für unseren Zweck spielen, außer dass sie mit den Kopfmerkmalen Strukturen teilen.
+\mybox{104} wird also als NP\Sub{nom} und \mybox{101} als NP\Sub{acc} abgekürzt.
+Die Abkürzung ist natürlich nur eine Sache der Darstellung.
+Wir erhalten:
+
+\Zeile
+
+\begin{avm}
+  \[ \asort{hd-arg-phr}
+    phon & \<\rm\it Kiki Die Strudlhofstiege \_ \> \\
+    loc|cat & \[
+      head & \rot{\@{105}} \\ 
+      subcat & \braun{\@{103}\ \<\>}\\
+    \]\\
+    hd-dtr &
+    \[ \asort{hd-arg-phr}
+      phon & \<\rm\it Die Strudlhofstiege \_ \> \\
+      loc|cat & \[
+        head & \rot{\@{105}} \\
+        subcat & \braun{\@{102} \@{103}$\oplus$\<\gruen{\@{104}}\>}\\
+      \]\\
+      hd-dtr & \[
+        \tuerkis{loc}   & \tuerkis{\@{100} \[cat & \[
+        head & \rot{\@{105} \[ dsl & \@{100} \]} \\
+        subcat & \braun{\@{102}} $\oplus$ \< \@{101} \> \\
+      \]
+      \]} \\
+      \]\\
+      nhd-dtr & \tuerkis{\@{101} \textup{\textsc{NP\Sub{acc}}}}\\
+    \]\\
+    nhd-dtr & \gruen{\@{104} \textup{\textsc{NP\Sub{nom}}}}
+  \]
+\end{avm}
+
+\Zeile
+
+Wir können jetzt in der \textsc{hd-dtr} die \textsc{subcat} füllen und die \textsc{nhd-dtr} in der Darstellung entfernen, weil sie uns gerade nicht mehr im Detail interessiert.
+Wir beginnen mit \mybox{101}:
+
+\Zeile
+
+\begin{avm}
+  \[ \asort{hd-arg-phr}
+    phon & \<\rm\it Kiki Die Strudlhofstiege \_ \> \\
+    loc|cat & \[
+      head & \rot{\@{105}} \\ 
+      subcat & \braun{\@{103}\ \<\>}\\
+    \]\\
+    hd-dtr &
+    \[ \asort{hd-arg-phr}
+      phon & \<\rm\it Die Strudlhofstiege \_ \> \\
+      loc|cat & \[
+        head & \rot{\@{105}} \\
+        subcat & \braun{\@{102} \@{103}$\oplus$\<\gruen{\@{104}}\>}\\
+      \]\\
+      hd-dtr & \[
+        \tuerkis{loc}   & \tuerkis{\@{100} \[cat & \[
+        head & \rot{\@{105} \[ dsl & \@{100} \]} \\
+        subcat & \braun{\@{102}} $\oplus$ \< \@{101} \textup{\textsc{NP\Sub{acc}}} \> \\
+      \]
+      \]} \\
+      \]\\
+    \]\\
+    nhd-dtr & \gruen{\@{104} \textup{\textsc{NP\Sub{nom}}}}
+  \]
+\end{avm}
+
+\newpage
+
+Und wir fahren fort mit \mybox{104}:
+
+\Zeile
+
+\begin{avm}
+  \[ \asort{hd-arg-phr}
+    phon & \<\rm\it Kiki Die Strudlhofstiege \_ \> \\
+    loc|cat & \[
+      head & \rot{\@{105}} \\ 
+      subcat & \braun{\@{103}\ \<\>}\\
+    \]\\
+    hd-dtr &
+    \[ \asort{hd-arg-phr}
+      phon & \<\rm\it Die Strudlhofstiege \_ \> \\
+      loc|cat & \[
+        head & \rot{\@{105}} \\
+        subcat & \braun{\@{102} \@{103}$\oplus$\<\gruen{\@{104} \textup{\textsc{NP\Sub{nom}}}}\>}\\
+      \]\\
+      hd-dtr & \[
+        \tuerkis{loc}   & \tuerkis{\@{100} \[cat & \[
+        head & \rot{\@{105} \[ dsl & \@{100} \]} \\
+        subcat & \braun{\@{102}} $\oplus$ \< \@{101} \textup{\textsc{NP\Sub{acc}}} \> \\
+      \]
+      \]} \\
+      \]\\
+    \]\\
+  \]
+\end{avm}
+
+\Zeile
+
+Wir haben bereits entschieden, dass \mybox{103} leer sein muss.
+Daher wissen wir, dass \mybox{102} nur \mybox{104} enthält.
+Wir vereinfachen daher an drei Stellen und lösen \mybox{103} auf.
+
+\Zeile
+
+\begin{avm}
+  \[ \asort{hd-arg-phr}
+    phon & \<\rm\it Kiki Die Strudlhofstiege \_ \> \\
+    loc|cat & \[
+      head & \rot{\@{105}} \\ 
+      subcat & \braun{\<\>}\\
+    \]\\
+    hd-dtr &
+    \[ \asort{hd-arg-phr}
+      phon & \<\rm\it Die Strudlhofstiege \_ \> \\
+      loc|cat & \[
+        head & \rot{\@{105}} \\
+        subcat & \braun{\<\gruen{\@{104}}\>}\\
+      \]\\
+      hd-dtr & \[
+        \tuerkis{loc}   & \tuerkis{\@{100} \[cat & \[
+        head & \rot{\@{105} \[ dsl & \@{100} \]} \\
+        subcat & \< \gruen{\@{104} \textup{\textsc{NP\Sub{nom}}}}, \@{101} \textup{\textsc{NP\Sub{acc}}} \> \\
+      \]
+      \]} \\
+      \]\\
+    \]\\
+  \]
+\end{avm}
+
+\Zeile
+
+Die \mybox{105} für \textsc{loc|cat|head} der gespurten VP taucht drei mal auf.
+Wir schieben ihre Beschreibung von \textsc{hd-dtr|hd-dtr|loc|cat|head} ganz nach oben und entfernen die anderen Instanzen aus der Darstellung (nicht aus der eigentlichen Merkmalsbeschreibung).
+\textsc{hd-dtr|loc|cat} kann damit ganz aus der Darstellung entfernt werden, weil alle seine relevanten Strukturteilungen auf \textsc{loc|cat} aufgegriffen werden.
+\textsc{hd-dtr|phon} kann auch weg.
+
+\Zeile
+
+\begin{avm}
+  \[ \asort{hd-arg-phr}
+    phon & \<\rm\it Kiki Die Strudlhofstiege \_ \> \\
+    loc|cat & \[
+      head & \rot{\@{105} \[ dsl & \@{100} \]} \\ 
+      subcat & \braun{\<\>}\\
+    \]\\
+    hd-dtr &
+    \[ hd-dtr & \[
+        \tuerkis{loc}   & \tuerkis{\@{100} \[cat & \[
+        head & \rot{\@{105}} \\
+        subcat & \< \gruen{\@{104} \textup{\textsc{NP\Sub{nom}}}}, \@{101} \textup{\textsc{NP\Sub{acc}}} \> \\
+      \]
+      \]} \\
+      \]\\
+    \]\\
+  \]
+\end{avm}
+
+\Zeile
+
+Jetzt können wir die \mybox{100} unter \textsc{loc|cat|head|dsl} darstellen und die \textsc{hd-dtr} aus der Darstellung nehmen.
+Die Farben können auch weg.
+
+\Zeile
+
+\begin{avm}
+  \[ \asort{hd-arg-phr}
+    phon & \<\rm\it Kiki Die Strudlhofstiege \_ \> \\
+    loc|cat & \[
+      head & \@{105} \[ dsl & \@{100} \[
+        cat & \[
+          head & \@{105} \\
+          subcat & \< \@{104} \textup{\textsc{NP\Sub{nom}}}, \@{101} \textup{\textsc{NP\Sub{acc}}} \> \\
+        \]
+      \]\] \\ 
+      subcat & \<\>\\
+    \]\\
+  \]
+\end{avm}
+
+\Zeile
+
+Die geforderte gespurte VP in Abschnitt~\ref{sec:top} sah folgendermaßen aus (s.\ dort die \textsc{subcat}):
+
+\Zeile
+
+\begin{avm}
+  \[
+    phon & \<\rm\it Kiki Die Strudlhofstiege \_\> \\
+    loc|cat & \[
+      head & \[ \asort{verb}
+        dsl & \@1
+        \[
+        cat & \[
+          head & \[ \asort{verb}
+            vform & fin \\
+            initial & $-$ \\
+          \]\\
+          subcat & \< NP\Sub{nom}, NP\Sub{acc} \> \\
+        \] \\
+      \]\\
+      \]\\
+      subcat & \<\> \\
+    \]
+  \]
+\end{avm}
+
+\Zeile
+
+Die beiden Strukturen unifizieren ganz offensichtlich mit \mybox{1}=\mybox{100}.
+Wir hatten bei der Spur nicht spezifiziert, dass sie ein Verbletzt-Verb ist (\textsc{head} [\textit{verb} \textsc{initial} $-$]), aber genau das wäre sie.
+Und die gesamte gespurte VP hat dieselben Kopfmerkmale, also passt auch die Teilung \mybox{105}.
+Der Punkt dabei ist, dass wir ganz oben auf der Satzebene legitimieren, dass wir die gespurte VP so aufgebaut haben, wie wir es getan haben.
+Die hypothetisch angenommene Valenz der Spur erweist sich an diesem Punkt als korrekt, weil das bewegte Verb auf einem lexikalischen Verb basiert, das die passende Valenz hat.
+Wow!
+
+Das Ganze geschieht in der (theoretischen) HPSG nicht in solchen Schritten mit Hypothesen über die Verbspur (in einem implementierten Parser eventuell aber schon bzw.\ entfernt so ähnlich).
+Diese Ableitung diente nur der Verdeutlichung, wie die Spur vom bewegten Verb ihren \textsc{local}-Wert durch die ganze Struktur hindurch (über \textsc{dsl}) aufgezwungen bekommt.
+Alles, was die HPSG sagt, ist, dass die Struktur \textit{Liest\Sub{1} Kiki Die Strudlhofstiege t\Sub{1}} ein Satz ist, weil auf Basis der Lexikoneinträge und Regeln über die entsprechenden Strukturteilungen die Wörter entsprechend unifizieren.
+
+\subsection{Aufgabe}
+
+Zeigen Sie parallel zu dieser Musterlösung, dass (\ref{ex:meeep}) nicht ableitbar ist.
+Behandeln Sie dabei \textit{des Buchs} wie \textit{Die Strudlhofstiege} als eine nicht weiter analysierte NP, allerdings im Genitiv.
+Kürzen Sie die nominalen Einträge auf der \textsc{subcat} des Verbs von Anfang an stark ab.
+
+\begin{exe}
+  \ex[*]{Liest\Sub{1} Kiki des Buchs t\Sub{1}.\label{ex:meeep}}
+\end{exe}
+
+\end{document}
+

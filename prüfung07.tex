@@ -1,0 +1,217 @@
+\documentclass[10pt,a4paper]{article}
+
+\usepackage[margin=2cm]{geometry}
+
+\usepackage{booktabs}
+\usepackage{color}
+\usepackage{soul}
+\usepackage[linecolor=gray,backgroundcolor=yellow!50,textsize=tiny]{todonotes}
+\usepackage[linguistics]{forest}
+\usepackage{styles/my-gb4e-slides}
+
+\usepackage{avm}
+
+\usepackage[maxbibnames=99,
+  maxcitenames=2,
+  uniquelist=false,
+  backend=biber,
+  doi=false,
+  url=false,
+  isbn=false,
+  bibstyle=biblatex-sp-unified,
+  citestyle=sp-authoryear-comp]{biblatex}
+
+\addbibresource{register.bib}
+
+\newcommand{\eg}{e.\,g.}
+\newcommand{\Eg}{E.\,g.}
+
+\newcommand{\Zeile}{\vspace{\baselineskip}}
+\newcommand{\Halbzeile}{\vspace{0.5\baselineskip}}
+\newcommand{\Viertelzeile}{\vspace{0.25\baselineskip}}
+
+\definecolor{rot}{rgb}{0,0,0}
+\definecolor{blau}{rgb}{0,0,0}
+\definecolor{gruen}{rgb}{0,0,0}
+\definecolor{grau}{rgb}{0,0,0}
+\definecolor{orongsch}{RGB}{0,0,0}
+\definecolor{tuerkis}{RGB}{0,0,0}
+\definecolor{braun}{RGB}{0,0,0}
+\definecolor{pinku}{RGB}{0,0,0}
+\definecolor{violett}{RGB}{0,0,0}
+
+\newcommand{\rot}[1]{\textcolor{rot}{#1}}
+\newcommand{\blau}[1]{\textcolor{blau}{#1}}
+\newcommand{\gruen}[1]{\textcolor{gruen}{#1}}
+\newcommand{\grau}[1]{\textcolor{grau}{#1}}
+\newcommand{\orongsch}[1]{\textcolor{orongsch}{#1}}
+\newcommand{\tuerkis}[1]{\textcolor{tuerkis}{#1}}
+\newcommand{\braun}[1]{\textcolor{braun}{#1}}
+\newcommand{\pinku}[1]{\textcolor{pinku}{#1}}
+\newcommand{\violett}[1]{\textcolor{violett}{#1}}
+\newcommand*{\mybox}[1]{\framebox{#1}}
+
+\forestset{
+  decide/.style={draw, chamfered rectangle, inner sep=2pt},
+  finall/.style={rounded corners, fill=gray, text=white},
+  intrme/.style={draw, rounded corners},
+  yes/.style={edge label={node[near end, above, sloped, font=\scriptsize]{Ja}}},
+  no/.style={edge label={node[near end, above, sloped, font=\scriptsize]{Nein}}}
+}
+
+\author{Roland Schäfer}
+\title{HPSG | Mündliche Prüfung | Bereich 7 \textit{Morphologie vs.\ Syntax}}
+\date{\today}
+
+\usepackage{fontspec}
+\defaultfontfeatures{Ligatures=TeX,Numbers=OldStyle, Scale=MatchLowercase}
+\setmainfont{Linux Libertine O}
+\setsansfont{Linux Biolinum O}
+
+\avmfont{\sc}
+\avmsortfont{\it}
+\avmvalfont{\it}
+
+\pagestyle{empty}
+
+\setlength{\parindent}{0pt}
+
+\begin{document}
+
+\maketitle
+
+\thispagestyle{empty}
+
+
+
+\section{Lexikoneintrag}\label{sec:lex}
+
+Der Typ \textit{mass-noun} sei ein Unter- oder Nebentyp von \textit{noun} mit leerer \textsc{subcat} und Stoffsemantik.\\
+
+\begin{avm}
+  \[ \asort{word}
+    phon & \<\rm\it Zement\> \\
+    cat & \[
+      head & \[ \asort{mass-noun} \] \\
+      subcat & \<\> \\
+    \] \\
+    cont & \[
+      index & \@1 \\
+      restr & \<\[ \asort{cement-substance-rel}
+        instance & \@1 \\
+      \]\> \\
+    \]
+  \]
+\end{avm}
+ 
+
+\section{Lösungsstrategien}
+
+\subsection{Morphologie mit DLR}\label{sec:dlr}
+
+
+\begin{avm}
+  \[ \asort{mass-sortal-noun-lex-rule}
+    cat & \[
+      head & \[ \asort{noun} \] \\
+      subcat & \<\[ cat|head & \[ \asort{det} \] \]\> \\
+    \]  \\
+    cont & \[
+      restr & \< \[ \asort{sort-of-mass-rel}
+        psoa-arg & \@3 \\
+      \]\> \\
+    \] \\
+    lex-dtr & \[
+      cat & \[
+        head & \[ \asort{mass-noun} \] \\
+      \] \\
+      cont &  \@3 \\
+    \]\\
+  \]
+\end{avm}\\
+
+
+\subsection{Syntax mit unärer Projektion}\label{sec:unaer}
+
+Für eine syntaktische \textit{unary-phrase} nehmen wir an, dass im Obertyp \textit{unary-phrase} bereits festgelegt wurde, dass \textsc{phon} und \textsc{cat|head} der Phrase gleich dem der \textsc{single-dtr} sind.\\
+
+\noindent\textit{unary-phrase}~$\Rightarrow$\\
+\begin{avm}
+  \[ 
+    phon & \@1 \\
+    cat|head & \@2 \\
+    single-dtr & \[
+      phon & \@1 \\
+      cat|head & \@2 \\
+    \]\\
+  \]
+\end{avm}\\
+
+\Zeile
+
+\noindent\textit{mass-sortal-noun-unary-phrase}~$\Rightarrow$\\
+\begin{avm}
+  \[ 
+    cat & \[
+      subcat & \<\[ cat|head & \[ \asort{det} \] \]\> \\
+    \]  \\
+    cont & \[
+      index & \@1 \\
+      restr & \< \[ \asort{sort-of-mass-rel}
+        psoa-arg & \@3 \\
+      \]\> \\
+    \] \\
+    single-dtr & \[
+      cat & \[
+        head & \[ \asort{mass-noun} \] \\
+      \] \\
+      cont &  \@3 \[
+        index & \@1 \\
+      \]\\
+    \]\\
+  \]
+\end{avm}\\
+
+
+\subsection{Syntax mit Nullartikel}\label{sec:null}
+
+
+\begin{avm}
+  \[
+    phon & \<\> \\
+    cat|head & \[ \asort{det}
+      spec|cat|head & \[ \asort{mass-noun} \] \\
+    \] \\
+  \]
+\end{avm}\\
+
+\Zeile
+
+\begin{avm}
+  \[ 
+    phon & \<\rm\it Zement\> \\
+    cat & \[
+      head & \@1 \\
+      subcat & \<\> \\
+    \] \\
+    hd-dtr & \[
+      phon & \<\rm\it Zement\> \\
+      cat & \[
+        head & \@1  \\
+        subcat & \< \@2 \[ cat|head & \[ \asort{det} \] \] \> \\
+      \] \\
+    \] \\
+    non-hd-dtr & \@2 \[
+      phon & \<\> \\
+      cat & \[
+        head & \[ \asort{det}
+          spec|cat|head & \@1 \[ \asort{mass-noun} \] \\
+        \]
+      \] \\
+    \]
+  \]
+\end{avm}\\
+
+
+\end{document}
+

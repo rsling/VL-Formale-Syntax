@@ -1,0 +1,325 @@
+\documentclass[10pt,a3paper]{article}
+
+\usepackage[margin=2cm]{geometry}
+
+\usepackage{booktabs}
+\usepackage{color}
+\usepackage{soul}
+\usepackage[linecolor=gray,backgroundcolor=yellow!50,textsize=tiny]{todonotes}
+\usepackage[linguistics]{forest}
+\usepackage{styles/my-gb4e-slides}
+
+\usepackage{avm}
+
+\usepackage[maxbibnames=99,
+  maxcitenames=2,
+  uniquelist=false,
+  backend=biber,
+  doi=false,
+  url=false,
+  isbn=false,
+  bibstyle=biblatex-sp-unified,
+  citestyle=sp-authoryear-comp]{biblatex}
+
+\addbibresource{register.bib}
+
+\newcommand{\eg}{e.\,g.}
+\newcommand{\Eg}{E.\,g.}
+
+\definecolor{rot}{rgb}{0,0,0}
+\definecolor{blau}{rgb}{0,0,0}
+\definecolor{gruen}{rgb}{0,0,0}
+\definecolor{grau}{rgb}{0,0,0}
+\definecolor{orongsch}{RGB}{0,0,0}
+\definecolor{tuerkis}{RGB}{0,0,0}
+\definecolor{braun}{RGB}{0,0,0}
+\definecolor{pinku}{RGB}{0,0,0}
+\definecolor{violett}{RGB}{0,0,0}
+
+\newcommand{\rot}[1]{\textcolor{rot}{#1}}
+\newcommand{\blau}[1]{\textcolor{blau}{#1}}
+\newcommand{\gruen}[1]{\textcolor{gruen}{#1}}
+\newcommand{\grau}[1]{\textcolor{grau}{#1}}
+\newcommand{\orongsch}[1]{\textcolor{orongsch}{#1}}
+\newcommand{\tuerkis}[1]{\textcolor{tuerkis}{#1}}
+\newcommand{\braun}[1]{\textcolor{braun}{#1}}
+\newcommand{\pinku}[1]{\textcolor{pinku}{#1}}
+\newcommand{\violett}[1]{\textcolor{violett}{#1}}
+
+\newcommand*{\mybox}[1]{\framebox{#1}}
+
+\forestset{
+  decide/.style={draw, chamfered rectangle, inner sep=2pt},
+  finall/.style={rounded corners, fill=gray, text=white},
+  intrme/.style={draw, rounded corners},
+  yes/.style={edge label={node[near end, above, sloped, font=\scriptsize]{Ja}}},
+  no/.style={edge label={node[near end, above, sloped, font=\scriptsize]{Nein}}}
+}
+
+\newcommand{\Sub}[1]{\ensuremath{_{\text{#1}}}}
+\newcommand{\Up}[1]{\ensuremath{^{\text{#1}}}}
+\newcommand{\UpSub}[2]{\ensuremath{^{\text{#1}}_{\text{#2}}}}
+\newcommand{\Zeile}{\vspace{\baselineskip}}
+\newcommand{\Halbzeile}{\vspace{0.5\baselineskip}}
+\newcommand{\Viertelzeile}{\vspace{0.25\baselineskip}}
+
+
+\author{Roland Schäfer}
+\title{HPSG | Mündliche Prüfung | Bereich 6 \textit{Adjunktextraktion mit Semantik}}
+\date{\today}
+
+\usepackage{fontspec}
+\defaultfontfeatures{Ligatures=TeX,Numbers=OldStyle, Scale=MatchLowercase}
+\setmainfont{Linux Libertine O}
+\setsansfont{Linux Biolinum O}
+
+\avmfont{\sc}
+\avmsortfont{\it}
+\avmvalfont{\it}
+
+\pagestyle{empty}
+
+\setlength\parindent{0pt}
+
+\begin{document}
+
+\maketitle
+
+\thispagestyle{empty}
+
+\section{Material}
+
+\begin{exe}
+  \ex Meistens filmt Dan.\label{ex:satz}
+\end{exe}
+
+\section{Lexikoneinträge}\label{sec:lex}
+
+\begin{avm}
+  \[ \asort{word}
+    phon & \<\rm\it Dan \> \\
+    loc|cat & \[
+      head & \[ \asort{noun}
+        cas & nom $\vee$ acc $\vee$ dat\\
+        num & sg \\
+      \]\\
+      subcat & \<\> \\
+    \] \\
+  \]
+\end{avm}
+
+\begin{avm}
+  \[ \asort{word}
+    phon & \<\rm\it filmt\> \\
+    loc|cat & \[
+      head & \[ \asort{verb}
+        vform & fin \\
+        initial & $-$ \\
+      \]\\
+      subcat & \<\[
+        loc|cat & \[
+          head & \[ \asort{noun}
+            cas & nom \\
+            num & sg \\
+          \]\\
+          subcat & \<\> \\
+        \] \\
+      \]
+      \> \\
+    \] \\
+  \]
+\end{avm}
+
+\begin{avm}
+  \[\asort{word}
+    phon & \<\rm\it meistens \> \\
+    loc & \[
+      cat & \[
+        head & \[
+          mod & \@{100} \[
+            loc & \[
+              cat|head & \[ \asort{verb} \] \\
+              cont & \@{1} \\
+            \] \\
+          \] \\
+        \] \\
+        subcat & \<\> \\
+      \] \\
+      cont & \[\asort{psoa}
+        restr & \[\asort{most-of-the-time-rel}
+          pso-arg & \@{1} \\
+        \] \\
+      \] \\
+    \] \\
+  \]
+\end{avm}
+
+\subsection{Spuren}
+
+\subsubsection{Verbspur}
+
+\begin{avm}
+  \[ phon & \<\> \\
+    loc  & \@{100} \[cat|head|dsl & \@{100}\] \\
+  \]
+\end{avm}
+
+\subsubsection{Argumentspur}
+
+\begin{avm}
+	\[\asort{word}
+		phon & \<\> \\
+                loc  & \orongsch{\@{200}} \\
+                nonloc & \[slash & \<\orongsch{\@{200}} \>\]
+	\]
+\end{avm}
+
+\section{Aufbau des Satzes}
+
+\subsection{Struktur mit Semantik-Skizze}
+
+\scalebox{0.8}{%
+\begin{avm}
+  \[ \asort{hd-filler-phr}
+    phon & \<\rm\it Meistens filmt \_ Dan \_\> \\
+    loc & \[ cat & \[
+      head & \tuerkis{\@{80}} \\
+      subcat & \<\> \\
+    \] \\
+    \violett{cont} & \violett{\@{1000}} \\
+  \] \\
+    nonloc|slash & \<\> \\
+    filler-dtr & \[
+      phon & \<\rm\it meistens \> \\
+      loc & \orongsch{\@{200} \[
+        cat & \[
+          head & \[
+            mod & \blau{\@{100} \[
+              loc|cat|head & \[ \asort{verb} \] \\
+            \]} \\
+          \] \\
+          subcat & \<\> \\
+        \] \\
+        \violett{cont} & \violett{\@{1000}} \\
+      \]} \\
+      nonloc|slash & \<\> \\
+    \] \\
+    hd-dtr & \[ \asort{hd-arg-phr}
+      phon & \<\rm\it filmt \_ Dan \_ \> \\
+      loc & \[ cat & \[
+        head & \tuerkis{\@{80}} \\
+        subcat & \<\> \\
+      \] \\
+      \violett{cont} & \violett{\@{1000}} \\
+    \] \\
+      nonloc|slash & \<\orongsch{\@{200}}\> \\
+      hd-dtr & \[\asort{v1-lr}
+          phon & \<\rm\it filmt \_\_\_\>\\
+          loc & \[ cat & \[
+            head & \tuerkis{\@{80} \[ \asort{verb}
+              vform & fin \\
+              initial & $+$ \\
+            \]} \\
+            subcat & \<\braun{\@{50} \[loc & \[ cat & \[
+            head|dsl & \rot{\@{1}} \\
+            subcat & \<\> \\
+          \]\] \\
+          \violett{cont} & \violett{\@{1000}} \\
+          \]}\> \\
+          \] \\
+          \violett{cont} & \violett{\@{1000}} \\
+          \] \\ 
+          nonloc|slash & \<\> \\
+          lex-dtr & \[
+            phon & \<\rm\it filmt\> \\
+            loc & \rot{\@{1} \[ cat & \[
+              head & \gruen{\@{10}} \\
+              subcat & \<\[
+                \pinku{\@{90} loc|cat} & \pinku{\[
+                head & \[ \asort{noun}
+                  cas & nom \\
+                  num & sg \\
+                \]\\
+                subcat & \<\> \\
+              \]} \\
+            \]\>
+          \] \\
+          \violett{cont} & \violett{\@{1002} \[ \asort{psoa}
+            restr & \<\[\asort{film-rel} 
+              agent & \@{1003} \\
+            \]\> \\
+          \]}\\
+        \]} \\
+        \]\\
+      \] \\
+      nhd-dtr & \braun{\@{50} \[ \asort{hd-mod-phr}
+        phon & \<\rm\it \_ Dan \_ \> \\
+        loc & \[ cat|head & \gruen{\@{10}} \\
+          \violett{cont} & \violett{\@{1000}\[
+            restr & \<\[\asort{most-of-the-time-rel}
+            psoa-arg & \@{1002} \\
+          \]\>\]}\\
+        \] \\
+        nonloc|slash & \<\orongsch{\@{200}}\> \\
+        nhd-dtr & \[
+          phon & \<\> \\
+          loc & \orongsch{\@{200}\[
+            \violett{cont} & \violett{\@{1000}} \\
+          \]}  \\
+          nonloc|slash & \<\orongsch{\@{200}}\> \\
+        \]\\
+        hd-dtr & \blau{\@{100} \[ \asort{hd-arg-phr}
+          phon & \<\rm\it Dan \_ \> \\
+          loc & \[ cat & \[
+            head & \gruen{\@{10} \[ \asort{verb}
+              vform & fin \\
+              initial & $-$ \\
+            \]}\\
+            subcat & \<\> \\
+          \] \\
+          \violett{cont} & \violett{\@{1002}\[\asort{psoa}
+            restr & \< \[ \asort{film-rel}
+              agent & \@{1003}
+            \]\> \\
+          \]} \\
+        \] \\
+          nonloc|slash & \<\> \\
+          hd-dtr & \[ \asort{word}
+            phon & \<\> \\
+            loc & \rot{\@{1} \[
+              cat & \[
+                head & \gruen{\@{10} \[ \asort{verb}
+                  dsl & \@{1} \\
+                \]}\\
+                \violett{cont} & \violett{\@{1002}} \\
+              \]
+            \]} \\
+          nonloc|slash & \<\> \\
+          \] \\
+          nhd-dtr & \pinku{\@{90} \[ \asort{word}
+            phon & \<\rm\it Dan\> \\
+            loc & \[ cat & \[
+              head & \[ \asort{noun}
+                case & nom \\
+                num & sg \\
+              \]\\
+              subcat & \<\> \\
+            \] \\
+            \violett{cont} & \violett{\[
+              index & \@{1003} \[
+                indiv & dan \\
+              \] \\
+            \]} \\
+          \]\\
+          nonloc|slash & \<\> \\
+          \]} \\
+        \]} \\
+      \]}
+    \]
+  \]
+\end{avm}%
+}
+
+
+
+\end{document}

@@ -1,0 +1,517 @@
+\documentclass[10pt,a3paper]{article}
+
+\usepackage[margin=2cm]{geometry}
+
+\usepackage{booktabs}
+\usepackage{color}
+\usepackage{soul}
+\usepackage[linecolor=gray,backgroundcolor=yellow!50,textsize=tiny]{todonotes}
+\usepackage[linguistics]{forest}
+\usepackage{styles/my-gb4e-slides}
+
+\usepackage{avm}
+
+\usepackage[maxbibnames=99,
+  maxcitenames=2,
+  uniquelist=false,
+  backend=biber,
+  doi=false,
+  url=false,
+  isbn=false,
+  bibstyle=biblatex-sp-unified,
+  citestyle=sp-authoryear-comp]{biblatex}
+
+\addbibresource{register.bib}
+
+\newcommand{\eg}{e.\,g.}
+\newcommand{\Eg}{E.\,g.}
+
+\definecolor{rot}{rgb}{0,0,0}
+\definecolor{blau}{rgb}{0,0,0}
+\definecolor{gruen}{rgb}{0,0,0}
+\definecolor{grau}{rgb}{0,0,0}
+\definecolor{orongsch}{RGB}{0,0,0}
+\definecolor{tuerkis}{RGB}{0,0,0}
+\definecolor{braun}{RGB}{0,0,0}
+\definecolor{pinku}{RGB}{0,0,0}
+\definecolor{violett}{RGB}{0,0,0}
+
+\newcommand{\rot}[1]{\textcolor{rot}{#1}}
+\newcommand{\blau}[1]{\textcolor{blau}{#1}}
+\newcommand{\gruen}[1]{\textcolor{gruen}{#1}}
+\newcommand{\grau}[1]{\textcolor{grau}{#1}}
+\newcommand{\orongsch}[1]{\textcolor{orongsch}{#1}}
+\newcommand{\tuerkis}[1]{\textcolor{tuerkis}{#1}}
+\newcommand{\braun}[1]{\textcolor{braun}{#1}}
+\newcommand{\pinku}[1]{\textcolor{pinku}{#1}}
+\newcommand{\violett}[1]{\textcolor{violett}{#1}}
+
+\newcommand*{\mybox}[1]{\framebox{#1}}
+
+\forestset{
+  decide/.style={draw, chamfered rectangle, inner sep=2pt},
+  finall/.style={rounded corners, fill=gray, text=white},
+  intrme/.style={draw, rounded corners},
+  yes/.style={edge label={node[near end, above, sloped, font=\scriptsize]{Ja}}},
+  no/.style={edge label={node[near end, above, sloped, font=\scriptsize]{Nein}}}
+}
+
+\author{Roland Schäfer}
+\title{HPSG | Mündliche Prüfung | Bereich 3 \textit{Adjunktion und Spezifikation}}
+\date{\today}
+
+\usepackage{fontspec}
+\defaultfontfeatures{Ligatures=TeX,Numbers=OldStyle, Scale=MatchLowercase}
+\setmainfont{Linux Libertine O}
+\setsansfont{Linux Biolinum O}
+
+\avmfont{\sc}
+\avmsortfont{\it}
+\avmvalfont{\it}
+
+\pagestyle{empty}
+
+\begin{document}
+
+\maketitle
+
+\thispagestyle{empty}
+
+\section{Material}
+
+\begin{exe}
+  \ex Die Freude wegen der Geschenke macht glücklich.\label{ex:satz}
+\end{exe}
+
+\section{Eintrag für \textit{wegen}}
+
+\subsection{Ohne Semantik (wie an der Tafel)}
+
+
+\begin{avm}
+  \[ \asort{word}
+    phon & \<\rm\it wegen\> \\
+    cat & \[
+      head & \[
+        \asort{prep}
+        mod | cat & \[
+            head & \[ \asort{noun} \] \\
+            subcat & \< \[ cat | head & \[ \asort{det} \]\] \>
+          \]
+      \]  \\
+      subcat & \<\[
+        cat \[
+          head & \[ \asort{noun}
+            case & gen
+          \]\\
+          subcat & \<\>\\
+        \]
+      \]\>\\
+    \] \\
+  \]
+\end{avm}
+
+
+\subsection{Mit Semantik}
+
+
+\begin{avm}
+  \[ \asort{word}
+    phon & \<\rm\it wegen\> \\
+    cat & \[
+      head & \[
+        \asort{prep}
+        mod & \[
+          cat & \[
+            head & \[ \asort{noun} \] \\
+            subcat & \< \[ cat | head & \[ \asort{det} \]\] \>
+          \] \\
+          \rot{cont} & \rot{\[
+            index & \@1 \\
+            restr & \@2 \\
+          \]}
+        \]
+      \]  \\
+      subcat & \<\[
+        cat & \[
+          head & \[ \asort{noun}
+            case & gen
+          \]\\
+          subcat & \<\>\\
+        \] \\
+        \rot{cont} & \rot{\[
+          index & \@3 \\
+          restr & \@4 \\
+        \]}\\
+      \]\>\\
+    \] \\
+    \rot{cont} & \rot{\[
+      ind & \@1 \\
+      restr & \< 
+      \[ \asort{cause-rel}
+        cause & \@3 \\
+        effect & \@1  \\
+      \]
+      \> $\oplus$ \@2 $\oplus$ \@4 \\
+    \]}
+  \]
+\end{avm}
+
+\newpage
+
+\subsection{PP}\label{sec:pp}
+
+\begin{avm}
+  \[
+    \asort{hd-arg-phrase}
+    phon & \<\rm\it wegen der Geschenke\> \\
+    cat & \[
+      head & \orongsch{\@{10}} \\
+      subcat & \<\> \\
+    \] \\
+    cont & \blau{\@{20}} \\
+    hd-dtr & \[ \asort{word}
+      phon & \<\rm\it wegen\> \\
+      cat & \[
+        head & \orongsch{\@{10}} \[
+          \asort{prep}
+          mod & \[
+            cat & \[
+              head & \[ \asort{noun} \] \\
+              subcat & \< \[ cat | head & \[ \asort{det} \]\] \>
+            \] \\
+            cont & \[
+              index & \@1 \\
+              restr & \@2 \\
+            \]
+          \]
+        \]  \\
+        subcat & \< \gruen{\@{11}} \>\\
+      \] \\
+      cont & \blau{\@{20}} \[
+        ind & \@1 \\
+        restr & \< 
+        \[ \asort{cause-rel}
+          cause & \@3 \\
+          effect & \@1  \\
+        \]
+        \> $\oplus$ \@2 $\oplus$ \@4 \\
+      \]
+    \] \\
+    nhd-dtr & \gruen{\@{11}} \[ \asort{hd-arg-phrase}
+      phon & \<\rm\it der Geschenke \> \\
+      cat & \[ head & \[ \asort{noun}
+        case & gen \\
+        num & pl \\
+        \] \\
+        subcat & \<\> \\
+      \] \\
+      cont & \[
+            index & \@3 \\
+            restr & \@4 \< \[ \asort{geschenke-rel}
+              instance & \@3 \\
+            \]\>\\
+          \]\\ \\
+    \]
+  \]
+\end{avm}
+
+\newpage
+
+\section{$\bar{N}$ mit PP-Modifikator}
+
+
+\begin{avm}
+  \[ \asort{hd-mod-phrase}
+    phon & \<\rm\it Freude wegen der Geschenke\> \\
+    cat & \[
+      head & \braun{\@{31}} \\
+      subcat & \braun{\@{32}} \\
+    \]\\
+    cont & \blau{\@{20}} \\
+    hd-dtr & \tuerkis{\@{30}} \[ \asort{word}
+      phon & \<\rm\it Freude \> \\
+      cat & \[
+        head & \braun{\@{31}} \[ \asort{noun} 
+          case & nom \\
+          num & sg \\
+        \] \\
+        subcat & \braun{\@{32}} \< \[ cat | head & \[ \asort{det} \]\] \>
+      \] \\
+      cont & \[
+        index & \@1 \\
+        restr & \@2 \\
+      \]
+    \] \\
+    nhd-dtr & \[
+      \asort{hd-arg-phrase}
+      phon & \<\rm\it wegen der Geschenke\> \\
+      cat & \[
+        head & \orongsch{\@{10}} \\
+        subcat & \<\> \\
+      \] \\
+      cont & \blau{\@{20}} \\
+      hd-dtr & \[ \asort{word}
+        phon & \<\rm\it wegen\> \\
+        cat & \[
+          head & \orongsch{\@{10}} \[
+            \asort{prep}
+            mod & \tuerkis{\@{30}} 
+          \]  \\
+          subcat & \< \gruen{\@{11}} \>\\
+        \] \\
+        cont & \blau{\@{20}} \[
+          ind & \@1 \\
+          restr & \< 
+          \[ \asort{cause-rel}
+            cause & \@3 \\
+            effect & \@1  \\
+          \]
+          \> $\oplus$ \@2 $\oplus$ \@4 \\
+        \]
+      \] \\
+      nhd-dtr & \gruen{\@{11}} \[ \asort{hd-arg-phrase}
+        phon & \<\rm\it der Geschenke \> \\
+        cat & \[ head & \[ \asort{noun}
+          case & gen \\
+          num & pl \\
+          \] \\
+          subcat & \<\> \\
+        \] \\
+        cont & \[
+              index & \@3 \\
+              restr & \@4 \< \[ \asort{geschenke-rel}
+                instance & \@3 \\
+              \]\>\\
+            \]\\ \\
+      \]
+    \] 
+  \]
+\end{avm}
+
+\section{Spezifikation}
+
+\subsection{Lexikoneintrag einfacher Determinierer}
+
+
+\begin{avm}
+  \[ \asort{word}
+    phon & \<\rm\it die\> \\
+    cat & \[
+      head & \[ \asort{det} 
+        spec & none \\
+      \]\\
+    \] \\
+  \]
+\end{avm}
+
+\subsection{Lexikoneintrag \textit{Ischariot}}
+
+\noindent Der Typ \textit{proper-name} sei ein Untertyp von \textit{noun}.\\
+
+
+\begin{avm}
+  \[ \asort{stem}
+    phon & \<\rm\it Ischariot \> \\
+    cat & \[
+      head & \[ \asort{proper-name}
+      \]\\
+    \] \\
+    cont & \[
+      index & \@1 \[
+        gen & masc \\
+        indiv & ischariot \\
+      \]\\
+    \]\\
+  \]
+\end{avm}
+
+\subsection{DLR für Eigennamengenitiv}
+
+
+\begin{avm}
+  \[ \asort{proper-name-genitive-lex-rule}
+    phon & \@1 $\oplus$ \<\rm\it s\> \\
+    cat & \[
+      head & \[ \asort{det}
+        case & gen \\
+        spec & \[ cont|ind & \@3 \]\\
+      \] \\
+    \]  \\
+    cont & \[
+      restr & \< \[ \asort{attribution-rel}
+        attribute & \@2 \\
+        attributed & \@3 \\
+      \]\> \\
+    \] \\
+    lex-dtr & \[ \asort{stem}
+      phon & \@1 \\
+      cat & \[
+        head & \[ \asort{proper-name} \] \\
+      \] \\
+      cont|ind & \@2 \\
+    \]\\
+  \]
+\end{avm}\\
+
+\subsection{Anwendung der DLR auf \textit{Ischariot}}
+
+Das Ergebnis kann dann als Determinierer verwendet werden.\\
+
+\begin{avm}
+  \[ \asort{proper-name-genitive-lex-rule}
+    phon & \<\rm\it Ischariot, s\> \\
+    cat & \[
+      head & \[ \asort{det}
+        case & gen \\
+        spec & \[ cont|ind & \@3 \]\\
+      \] \\
+    \]  \\
+    cont & \[
+      restr & \< \[ \asort{attribution-rel}
+        attribute & \@2 \\
+        attributed & \@3 \\
+      \]\> \\
+    \] \\
+    lex-dtr & \[ \asort{stem}
+      phon & \<\rm\it Ischariot \> \\
+      cat & \[
+        head & \[ \asort{proper-name}
+        \]\\
+      \] \\
+      cont & \[
+        index & \@2 \[
+          gen & masc \\
+          indiv & ischariot \\
+        \]\\
+      \]\\
+    \]\\
+  \]
+\end{avm}\\
+
+\paragraph{Zusatzaufgabe}
+
+Es geht auch eleganter und ohne, dass man aus einem Nominalstamm einen Determinierer machen muss, was etwas unnatürlich ist.
+Es wäre eine lexikalische Anpassung von Kopfnomina erforderlich.
+Überlegen Sie, wie das gehen würde.
+
+\newpage
+
+\subsection{NP mit modifizierender PP und Genitiv-\textsc{spec}}
+
+\begin{avm}
+  \[ \asort{hd-arg-phrase}
+    phon & \<\rm\it Ischariots Freude über die Geschenke \> \\
+    cat & \[
+      head & \@{31} \\
+      subcat & \<\> \\
+    \]\\
+    cont & \@{20} \\
+    nhd-dtr & \@{400} \[
+      \asort{proper-name-genitive-lex-rule}
+      phon & \<\rm\it Ischariots\> \\
+      cat & \[
+        head & \[ \asort{det}
+          case & gen \\
+          spec & \@{300} \\
+        \] \\
+      \]  \\
+      cont & \[
+        restr & \< \[ \asort{attribution-rel}
+          attribute & \@{200} \\
+          attributed & \@{1} \\
+        \]\> \\
+      \] \\
+      lex-dtr & \[ \asort{stem}
+        phon & \<\rm\it Ischariot \> \\
+        cat & \[
+          head & \[ \asort{proper-name}
+          \]\\
+        \] \\
+        cont & \[
+          index & \@{200} \[
+            gen & masc \\
+            indiv & ischariot \\
+          \]\\
+        \]\\
+      \]\\
+    \] \\
+    hd-dtr & \@{300} \[ \asort{hd-mod-phrase}
+      phon & \<\rm\it Freude wegen der Geschenke\> \\
+      cat & \[
+        head & \braun{\@{31}} \\
+        subcat & \braun{\@{32} \< \@{400} \>} \\
+      \]\\
+      cont & \blau{\@{20}} \\
+      hd-dtr & \tuerkis{\@{30}} \[ \asort{word}
+        phon & \<\rm\it Freude \> \\
+        cat & \[
+          head & \braun{\@{31}} \[ \asort{noun} 
+            case & nom \\
+            num & sg \\
+          \] \\
+          subcat & \braun{\@{32}} 
+        \] \\
+        cont & \[
+          index & \@1 \\
+          restr & \@2 \\
+        \]
+      \] \\
+      nhd-dtr & \[
+        \asort{hd-arg-phrase}
+        phon & \<\rm\it wegen der Geschenke\> \\
+        cat & \[
+          head & \orongsch{\@{10}} \\
+          subcat & \<\> \\
+        \] \\
+        cont & \blau{\@{20}} \\
+        hd-dtr & \[ \asort{word}
+          phon & \<\rm\it wegen\> \\
+          cat & \[
+            head & \orongsch{\@{10}} \[
+              \asort{prep}
+              mod & \tuerkis{\@{30}} 
+            \]  \\
+            subcat & \< \gruen{\@{11}} \>\\
+          \] \\
+          cont & \blau{\@{20}} \[
+            ind & \@1 \\
+            restr & \< 
+            \[ \asort{cause-rel}
+              cause & \@3 \\
+              effect & \@1  \\
+            \]
+            \> $\oplus$ \@2 $\oplus$ \@4 \\
+          \]
+        \] \\
+        nhd-dtr & \gruen{\@{11}} \[ \asort{hd-arg-phrase}
+          phon & \<\rm\it der Geschenke \> \\
+          cat & \[ head & \[ \asort{noun}
+            case & gen \\
+            num & pl \\
+            \] \\
+            subcat & \<\> \\
+          \] \\
+          cont & \[
+                index & \@3 \\
+                restr & \@4 \< \[ \asort{geschenke-rel}
+                  instance & \@3 \\
+                \]\>\\
+              \]\\ \\
+        \]
+      \] 
+    \]
+  \]
+\end{avm}
+
+\paragraph{Zusatzaufgabe}
+
+Wenn Sie genau hinsehen, können Sie feststellen, dass noch etwas fehlt.
+Die Semantik der gesamten Phrase (also \mybox{20}) wird noch nicht korrekt modelliert.
+Überlegen Sie, warum das so ist, und was man tun könnte, um das Problem zu lösen.\\
+
+
+
+\end{document}
+
+

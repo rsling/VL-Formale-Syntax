@@ -1,0 +1,441 @@
+\documentclass[10pt,a4paper]{article}
+
+\usepackage[margin=2cm]{geometry}
+
+\usepackage{booktabs}
+\usepackage{color}
+\usepackage{soul}
+\usepackage[linecolor=gray,backgroundcolor=yellow!50,textsize=tiny]{todonotes}
+\usepackage[linguistics]{forest}
+\usepackage{styles/my-gb4e-slides}
+
+\usepackage{avm}
+
+\usepackage[maxbibnames=99,
+  maxcitenames=2,
+  uniquelist=false,
+  backend=biber,
+  doi=false,
+  url=false,
+  isbn=false,
+  bibstyle=biblatex-sp-unified,
+  citestyle=sp-authoryear-comp]{biblatex}
+
+\definecolor{rot}{rgb}{0,0,0}
+\definecolor{blau}{rgb}{0,0,0}
+\definecolor{gruen}{rgb}{0,0,0}
+\definecolor{grau}{rgb}{0,0,0}
+\definecolor{orongsch}{RGB}{0,0,0}
+\definecolor{tuerkis}{RGB}{0,0,0}
+\definecolor{braun}{RGB}{0,0,0}
+\definecolor{pinku}{RGB}{0,0,0}
+\definecolor{violett}{RGB}{0,0,0}
+
+\newcommand{\rot}[1]{\textcolor{rot}{#1}}
+\newcommand{\blau}[1]{\textcolor{blau}{#1}}
+\newcommand{\gruen}[1]{\textcolor{gruen}{#1}}
+\newcommand{\grau}[1]{\textcolor{grau}{#1}}
+\newcommand{\orongsch}[1]{\textcolor{orongsch}{#1}}
+\newcommand{\tuerkis}[1]{\textcolor{tuerkis}{#1}}
+\newcommand{\braun}[1]{\textcolor{braun}{#1}}
+
+\forestset{
+  decide/.style={draw, chamfered rectangle, inner sep=2pt},
+  finall/.style={rounded corners, fill=gray, text=white},
+  intrme/.style={draw, rounded corners},
+  yes/.style={edge label={node[near end, above, sloped, font=\scriptsize]{Ja}}},
+  no/.style={edge label={node[near end, above, sloped, font=\scriptsize]{Nein}}}
+}
+
+\author{Roland Schäfer}
+\title{HPSG | Mündliche Prüfung | Bereich 1 \textit{Argumentabbindung}}
+\date{\today}
+
+\usepackage{fontspec}
+\defaultfontfeatures{Ligatures=TeX,Numbers=OldStyle, Scale=MatchLowercase}
+\setmainfont{Linux Libertine O}
+\setsansfont{Linux Biolinum O}
+
+\avmfont{\sc}
+\avmsortfont{\it}
+\avmvalfont{\it}
+
+\pagestyle{empty}
+
+\begin{document}
+
+\maketitle
+
+\thispagestyle{empty}
+
+\section{Material}
+
+\begin{exe}
+  \ex Schläft das Kind?\label{ex:satz}
+\end{exe}
+
+\section{Lexikoneinträge}
+
+\subsection{Verb}
+
+\noindent\begin{avm}
+  \[
+    phon & schläft \\
+    head & \[ \asort{verb}
+      vform & fin
+    \]\\
+    subcat & \< \[
+      head & \[ \asort{noun}
+        case & nom 
+      \]\\
+      subcat & \<\>
+    \] \>\\
+  \]
+\end{avm}
+
+\subsection{Substantiv\slash Nomen}
+
+\noindent\begin{avm}
+  \[
+    phon & Kind \\
+    head & \[ \asort{noun}
+      case & \@1 nom 
+    \]\\
+    subcat & \< \[
+      head & \[ \asort{det}
+        case & \@1
+      \] \\
+      subcat & \<\>
+    \]\>
+  \]
+\end{avm}
+
+\subsection{Determinierer}
+
+\noindent\begin{avm}
+  \[
+    phon & das \\
+    head & \[ \asort{det}
+      case & nom 
+    \]\\
+    subcat & \<\>
+  \]
+\end{avm}
+
+\newpage
+
+\section{Schemata und Prinzipien}
+
+\subsection{Kopf-Argument-Schema}
+
+\textit{hd-arg-phrase} $\Rightarrow$
+\begin{avm}
+  \[
+    subcat & \@1 \\
+    hd-dtr|subcat & \@1 $\oplus$ \< \@2 \> \\
+    nhd-dtr & \@2
+  \]
+\end{avm}
+
+\subsection{Kopfmerkmalprinzip}
+
+\noindent \textit{headed-phrase} $\Rightarrow$
+\begin{avm}
+  \[
+    head & \@1 \\
+    hd-dtr|head & \@1
+  \]
+\end{avm}
+
+
+\section{Phrasenbildung}
+
+\subsection{Die Nominalphrase}
+
+\begin{avm}
+  \[ \asort{\blau{hd-arg-phrase}}
+    \grau{phon} & \grau{das Kind} \\
+    \rot{head} & \rot{\@2} \\
+    \blau{subcat} & \blau{\<\>} \\
+    \blau{hd-dtr} & \[
+        phon & Kind \\
+        head & \rot{\@2} \[ \asort{noun}
+          case & \gruen{\@1 nom}
+        \]\\
+        subcat & \< \blau{\@3} \[
+          head & \[ \asort{det}
+            case & \gruen{\@1}
+          \] \\
+          subcat & \<\>
+        \]\>
+      \] \\
+      \blau{nhd-dtr} & \blau{\@3} \[
+        phon & das \\
+        head & \[ \asort{det}
+          case & \gruen{\@1 nom}
+        \]\\
+        subcat & \<\>
+      \]
+  \]
+\end{avm}
+
+\subsection{Verbalphrase\slash Satz}
+
+\begin{avm}
+  \[ \asort{\blau{hd-arg-pghrase}}
+    \grau{phon} & \grau{schläft das Kind} \\
+    \rot{head} & \rot{\@4} \\
+    \blau{subcat} & \blau{\<\>} \\
+    \blau{hd-dtr} & \[
+      phon & schläft \\
+      head & \rot{\@4} \[ \asort{verb}
+        vform & fin
+      \]\\
+      subcat & \< \blau{\@5} \[
+        head & \[ \asort{noun}
+          case & nom 
+        \]\\
+        subcat & \<\>
+      \] \>\\
+    \] \\
+    \blau{nhd-dtr} & \blau{\@5} \[ \asort{hd-arg-phrase}
+      phon & das Kind \\
+      head & \@2 \\
+      subcat & \<\> \\
+      hd-dtr & \[
+          phon & Kind \\
+          head & \@2 \[ \asort{noun}
+            case & \@1 nom 
+          \]\\
+          subcat & \< \@3 \[
+            head & \[ \asort{det}
+              case & \@1
+            \] \\
+            subcat & \<\>
+          \]\>
+        \] \\
+        nhd-dtr & \@3 \[
+          phon & das \\
+          head & \[ \asort{det}
+            case & \@1 nom 
+          \]\\
+          subcat & \<\>
+        \]
+    \]
+  \]
+\end{avm}
+
+\section{Satzanalyse mit Semantik}
+
+\subsection{Verb}
+
+
+\noindent\begin{avm}
+  \[
+    phon & schläft \\
+    head & \[ \asort{verb}
+      vform & fin
+    \]\\
+    \orongsch{cont} & \orongsch{\[
+      restr & \<\[ \asort{schlafen-rel}
+        experiencer & \@{100} \\
+      \]\> $\oplus$ \@{101} \\
+    \]} \\
+    subcat & \< \[
+      head & \[ \asort{noun}
+        case & nom 
+      \]\\
+      subcat & \<\>\\
+      \orongsch{cont} & \orongsch{\[
+        index & \@{100} \\
+        restr & \@{101} \\
+      \]} \\
+    \] \>\\
+  \]
+\end{avm}
+
+\subsection{Semantikprinzip}
+
+\noindent \textit{headed-phrase} $\Rightarrow$
+\begin{avm}
+  \[
+    cont & \@1 \\
+    hd-dtr|cont & \@1
+  \]
+\end{avm}
+
+
+\subsection{Satz}
+
+
+\begin{avm}
+  \[ \asort{hd-arg-pghrase}
+    phon & schläft das Kind \\
+    head & \@4 \\
+    \orongsch{cont} & \tuerkis{\@6} \\
+    subcat & \<\> \\
+    hd-dtr & \[
+      phon & schläft \\
+      head & \@4 \[ \asort{verb}
+        vform & fin
+      \]\\
+      \orongsch{cont} & \tuerkis{\@6} \orongsch{\[
+        restr & \<\[ \asort{schlafen-rel}
+          experiencer & \@8 \\
+        \]\> $\oplus$ \@9 \\
+      \]} \\
+      subcat & \< \@5 \[
+        head & \[ \asort{noun}
+          case & nom 
+        \]\\
+        subcat & \<\>\\
+        \orongsch{cont} & \orongsch{\[
+          index & \@8 \\
+          restr & \@9 \\
+        \]} \\
+      \] \>\\
+    \] \\
+    nhd-dtr & \@5 \[ \asort{hd-arg-phrase}
+      phon & das Kind \\
+      head & \@2 \\
+      \orongsch{cont} & \tuerkis{\@7} \\
+      subcat & \<\> \\
+      hd-dtr & \[
+          phon & Kind \\
+          head & \@2 \[ \asort{noun}
+            case & \@1 nom 
+          \]\\
+          \orongsch{cont} & \tuerkis{\@7} \orongsch{\[
+            index & \@8 \[
+              num & sg \\
+              per & 3 \\
+              gen & n
+            \]\\
+            restr & \@9 \< \[ \asort{kind-rel}
+              instance & \@8 \\
+            \] \>  \\
+          \] } \\
+          subcat & \< \@3 \[
+            head & \[ \asort{det}
+              case & \@1
+            \] \\
+            subcat & \<\>
+          \]\>
+        \] \\
+        nhd-dtr & \@3 \[
+          phon & das \\
+          head & \[ \asort{det}
+            case & \@1 nom 
+          \]\\
+          subcat & \<\>
+        \]
+    \]
+  \]
+\end{avm}
+
+\section{Zusatz: Lexioneintrag für \textit{gibt}}
+
+\subsection{Konform zum Buch}
+
+\begin{avm}
+  \[
+  phon & gibt \\
+  head & \[ \asort{verb}
+    vform & fin 
+  \]\\
+  cont & \[ 
+    restr & \[ \asort{geben-rel}
+      agent & \@{200} \\
+      theme & \@{201} \\
+      goal & \@{202} \\
+    \]
+  \]\\
+  subcat & \<
+  \[
+    head & \[\asort{noun}
+      case & nom \\
+    \]\\
+    subcat & \<\> \\
+    cont|ind & \@{200}\\
+  \]
+  ,
+  \[
+    head & \[\asort{noun}
+      case & acc \\
+    \]\\
+    subcat & \<\> \\
+    cont|ind & \@{201}
+  \]
+  ,
+  \[
+    head & \[\asort{noun}
+      case & dat \\
+    \]\\
+    subcat & \<\> \\
+    cont|ind & \@{202}
+  \]
+  \>
+  \]
+\end{avm}
+
+
+\subsection{Version mit Semantiktrick}
+
+\begin{avm}
+  \[
+  phon & gibt \\
+  head & \[ \asort{verb}
+    vform & fin 
+  \]\\
+  cont & \[ 
+    restr & \<
+    \[ \asort{geben-rel}
+      agent & \@{200} \\
+      theme & \@{201} \\
+      goal & \@{202}  \\
+    \]
+    \>
+    $\oplus$ \@{300} 
+    $\oplus$ \@{301} 
+    $\oplus$ \@{302} 
+  \]\\
+  subcat & \<
+  \[
+    head & \[\asort{noun}
+      case & nom \\
+    \]\\
+    subcat & \<\> \\
+    cont & \[
+      index & \@{200} \\
+      restr & \@{300} \\
+    \]
+  \]
+  ,
+  \[
+    head & \[\asort{noun}
+      case & acc \\
+    \]\\
+    subcat & \<\> \\
+    cont & \[
+      index & \@{201} \\
+      restr & \@{301} \\
+    \]
+  \]
+  ,
+  \[
+    head & \[\asort{noun}
+      case & dat \\
+    \]\\
+    subcat & \<\> \\
+    cont & \[
+      index & \@{202} \\
+      restr & \@{302} \\
+    \]
+  \]
+  \>
+  \]
+\end{avm}
+
+
+
+\end{document}
